@@ -1,0 +1,27 @@
+html,
+body {
+    min-width: 100vw;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.form-generator {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        display: flex;
+        line-height: 30px;
+        padding: 15px;
+        flex-grow: 0;
+    }
+    .stage {
+        display: flex;
+        flex-grow: 1;
+    }
+}

@@ -1,0 +1,85 @@
+.configurator {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+
+    .configurator-toolbar {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: auto;
+        flex-grow: 0;
+        padding: 5px;
+
+        .toolbar-title,
+        .toolbar-field {
+            display: flex;
+        }
+
+        .toolbar-title {
+            justify-content: flex-end;
+            flex-direction: column;
+            padding: 6px;
+            color: #00000044;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+        }
+
+        .toolbar-field {
+            justify-content: center;
+            flex-direction: column;
+            padding: 5px 5px 4px;
+            border: 1px solid #00000022;
+            margin-bottom: 5px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    }
+
+    .configurator-navigator {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 80px;
+        padding: 5px;
+
+        .navigator-icon {
+            vertical-align: sub;
+            font-size: 1rem;
+        }
+
+        .navigator-page {
+            .title {
+                background-color: #fefefe;
+                padding: 5px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: #00000099;
+            }
+
+            .navigator-group {
+                background-color: #00000011;
+
+                .title {
+                    font-weight: 400;
+                    background-color: #eeeeee;
+                }
+
+                .navigator-field {
+                    .title {
+                        font-weight: 400;
+                        background-color: #dddddd;
+                    }
+                }
+            }
+        }
+    }
+
+    .configurator-preview {
+        flex-grow: 7;
+        flex-shrink: 0;
+        background-color: #dedede;
+    }
+}
