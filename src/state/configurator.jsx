@@ -1,5 +1,6 @@
 import {
     CONFIGURATOR_SELECT_ITEM,
+    CONFIGURATOR_REMOVE_ITEM,
     CONFIGURATOR_SHOW_PROPERTIES,
     CONFIGURATOR_SET_FORM,
     CONFIGURATOR_SET_PAGES,
@@ -25,7 +26,7 @@ export default function(state = defaultState, action) {
     switch (action.type) {
         case CONFIGURATOR_SELECT_ITEM:
             // returning to root
-            if (!action.item) return { ...state, selected: {} };
+            if (!action.item) return { ...state, selected: {}, properties: {} };
 
             // invalid item selected
             if (!action.item.type || !action.item.type.name) return state;
@@ -44,7 +45,7 @@ export default function(state = defaultState, action) {
                     selected = { ...selected, field: action.item };
                     break;
             }
-            return { ...state, selected };
+            return { ...state, selected, properties: {} };
 
         case CONFIGURATOR_SHOW_PROPERTIES:
             return { ...state, properties: { page: action.page, group: action.group, field: action.field } };
@@ -67,6 +68,36 @@ export default function(state = defaultState, action) {
             ];
             return { ...state, pages: sfPages };
 
+        case CONFIGURATOR_REMOVE_ITEM:
+            let riPages = [...state.pages];
+
+            // remove field
+            if (!!state.properties.page && !!state.properties.group && !!state.properties.field) {
+                riPages = riPages.map(p =>
+                    p.id === state.properties.page.id
+                        ? {
+                              ...p,
+                              groups: p.groups.map(g =>
+                                  g.id === state.properties.group.id ? { ...g, fields: g.fields.filter(f => f.id !== state.properties.field.id) } : g
+                              )
+                          }
+                        : p
+                );
+                return { ...state, pages: riPages, properties: {}, selected: { ...state.selected, field: undefined } };
+            }
+
+            // remove group
+            if (!!state.properties.page && !!state.properties.group) {
+                riPages = riPages.map(p =>
+                    p.id === state.properties.page.id ? { ...p, groups: p.groups.filter(g => g.id !== state.properties.group.id) } : p
+                );
+                return { ...state, pages: riPages, properties: {}, selected: { ...state.selected, group: undefined } };
+            }
+
+            // remove page
+            riPages = riPages.filter(p => p.id !== state.properties.page.id);
+            return { ...state, pages: riPages, properties: {}, selected: {} };
+
         default:
             return state;
     }
@@ -74,6 +105,9 @@ export default function(state = defaultState, action) {
 
 export const selectItem = item => async dispatch => {
     dispatch({ type: CONFIGURATOR_SELECT_ITEM, item });
+};
+export const removeItem = () => async dispatch => {
+    dispatch({ type: CONFIGURATOR_REMOVE_ITEM });
 };
 
 export const showProperties = (page, group, field) => async dispatch => {

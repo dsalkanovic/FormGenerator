@@ -29,5 +29,8 @@ export const TEST_PAGES = [
     new Page({ title: 'Documents 4' }),
     new Page({ title: 'Documents 5' }),
     new Page({ title: 'Documents 6' }),
-    new Page({ title: 'Documents 7' })
+    new Page({
+        title: 'Some extra long PAGE name',
+        groups: [new Group({ title: 'Some extra long GROUP name, seriously really long name', fields: [new Field({ title: 'Some extra long FILED name' })] })]
+    })
 ];

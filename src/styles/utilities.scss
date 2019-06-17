@@ -1,3 +1,27 @@
+.clickable {
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all ease-in-out 250ms;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.no-select {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* ------------------------------------------ */
 /* ############### 6.3 Height ############### */
 /* ------------------------------------------ */

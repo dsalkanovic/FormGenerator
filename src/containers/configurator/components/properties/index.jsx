@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SimpleBar from 'simplebar-react';
-import { selectItem, setPages, setGroups, setFields } from '../../../../state/configurator';
+import { selectItem, setPages, setGroups, setFields, removeItem } from '../../../../state/configurator';
+import { X } from 'react-feather';
+import { Formik, Form, Field } from 'formik';
 
 class Properties extends React.Component {
     constructor(props) {
@@ -28,7 +30,7 @@ class Properties extends React.Component {
     };
 
     render() {
-        const { height } = this.props;
+        const { height, removeItem } = this.props;
 
         const itemProperties = this.getItemProperties();
         if (!itemProperties) return null;
@@ -40,7 +42,39 @@ class Properties extends React.Component {
                 </div>
                 <SimpleBar style={{ height }}>
                     <div className="card-body">
-                        <div>{itemProperties.title}</div>
+                        <div className="row">
+                            <div className="col">
+                                <Formik
+                                    key={itemProperties.id}
+                                    enableReinitialize={true}
+                                    initialValues={{ ...itemProperties }}
+                                    onSubmit={v => console.log(v)}
+                                    render={({ handleChange, submitForm }) => {
+                                        return (
+                                            <Form
+                                                noValidate
+                                                onChange={async e => {
+                                                    await handleChange(e);
+                                                    submitForm();
+                                                }}
+                                            >
+                                                <React.Fragment>
+                                                    <div className="form-group">
+                                                        <Field type="text" name="title" className="form-control" />
+                                                    </div>
+                                                </React.Fragment>
+                                            </Form>
+                                        );
+                                    }}
+                                />
+                            </div>
+                            <div className="col-12">
+                                <button type="button" className="btn btn-block button-grey" onClick={removeItem}>
+                                    <X />
+                                    <span>Remove</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </SimpleBar>
             </div>
@@ -58,7 +92,8 @@ const mapDispatchToProps = dispatch =>
             selectItem,
             setPages,
             setGroups,
-            setFields
+            setFields,
+            removeItem
         },
         dispatch
     );

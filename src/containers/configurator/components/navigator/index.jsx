@@ -3,15 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectItem, showProperties, setPages, setGroups, setFields } from '../../../../state/configurator';
 import { List, arrayMove } from 'react-movable';
-import { Settings, XSquare, ChevronsRight, ChevronsLeft } from 'react-feather';
+import { Settings, ChevronsRight, ChevronsLeft, Plus } from 'react-feather';
 import { arePropertiesShown } from '../common/utilities';
 
 class Navigator extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
     renderList = () => {
         const { height, pages, selected, properties, selectItem, showProperties, setPages, setGroups, setFields } = this.props;
         const { page, group } = selected;
@@ -48,12 +43,9 @@ class Navigator extends React.Component {
                             className={`list-item ${isDragged ? 'dragged' : ''} ${arePropertiesShown(value, properties) ? 'selected' : ''}`}
                         >
                             <div className="row">
-                                <div className="col item-title">{value.title}</div>
+                                <div className="col item-title ellipsis">{value.title}</div>
                                 {!isDragged && (
                                     <div className="col-6 text-right">
-                                        <button className="item-action" onClick={e => console.log(value)}>
-                                            <XSquare />
-                                        </button>
                                         <button className="item-action" onClick={() => propertiesAction(value)}>
                                             <Settings />
                                         </button>
@@ -78,35 +70,19 @@ class Navigator extends React.Component {
             selectItem
         } = this.props;
 
-        let title = (
-            <div className="card-header">
-                <span className="configurator-title">Pages</span>
-            </div>
-        );
-        if (!!page) {
-            title = (
-                <div className="card-header">
-                    <span className="navigator-back" onClick={() => selectItem()}>
-                        <ChevronsLeft />
-                    </span>
-                    <span className="configurator-title">Groups</span>
-                </div>
-            );
-        }
-        if (group) {
-            title = (
-                <div className="card-header">
-                    <span className="navigator-back" onClick={() => selectItem(page)}>
-                        <ChevronsLeft />
-                    </span>
-                    <span className="configurator-title">Fields</span>
-                </div>
-            );
-        }
-
         return (
             <div className="card navigator-pane">
-                {title}
+                <div className="row configurator-header">
+                    {(!!page || !!group) && (
+                        <div className="col pd-x-0 text-center navigator-back" onClick={() => selectItem(!!page && !!group ? page : undefined)}>
+                            <ChevronsLeft />
+                        </div>
+                    )}
+                    <div className="col pd-x-0 configurator-title ellipsis">{!!page ? (!!group ? group.title : page.title) : 'Pages'}</div>
+                    <div className="col pd-x-0 text-center navigator-actions">
+                        <Plus />
+                    </div>
+                </div>
                 <div className="card-body navigator-body">{this.renderList()}</div>
             </div>
         );
