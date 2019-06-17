@@ -1,14 +1,14 @@
 import React from 'react';
 import SimpleBar from 'simplebar-react';
 
-class Preview extends React.Component {
+class Properties extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
     render() {
-        const { pages = [], height } = this.props;
+        const { height } = this.props;
 
         return (
             <div className="card">
@@ -17,7 +17,7 @@ class Preview extends React.Component {
                 </div>
                 <SimpleBar style={{ height }}>
                     <div className="card-body" ref={this.container}>
-                        {pages.length} pages here
+                        properties go here
                     </div>
                 </SimpleBar>
             </div>
@@ -25,4 +25,4 @@ class Preview extends React.Component {
     }
 }
 
-export default Preview;
+export default Properties;

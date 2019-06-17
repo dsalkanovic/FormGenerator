@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 
 import configurator from './configurator';
 import fields from './fields';
+import ui from './ui';
 
 const initialState = {};
 const enhancers = [];
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const appReducer = combineReducers({
     configurator,
+    ui,
     fields
 });
 

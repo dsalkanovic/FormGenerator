@@ -1,26 +1,26 @@
 import React from 'react';
-import { InsertDriveFileOutlined } from '@material-ui/icons';
+import DraggableList from 'react-draggable-list';
+import { Menu } from 'react-feather';
 
 class NavigatorPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            expanded: true
-        };
+        this.state = {};
     }
 
-    setExpanded = expanded => this.setState({ ...this.state, expanded });
+    // getDragHeight = () => 43;
 
     render() {
-        const { name, children } = this.props;
-        const { expanded } = this.state;
+        const { item, itemSelected, dragHandleProps } = this.props;
 
         return (
-            <div className="navigator-page">
-                <div className="title" onClick={() => this.setExpanded(!expanded)}>
-                    <InsertDriveFileOutlined className="navigator-icon" /> {name} ({children.length})
+            <div className={`navigator-page ${itemSelected !== 0}`}>
+                <div className="navigator-header">
+                    <div className="navigator-handle" {...dragHandleProps}>
+                        <Menu />
+                    </div>
+                    <div className="navigator-title">{item.title}</div>
                 </div>
-                {expanded ? children : null}
             </div>
         );
     }

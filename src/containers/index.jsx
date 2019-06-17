@@ -3,6 +3,10 @@ import { Provider } from 'react-redux';
 import { store } from '../state';
 import FormConfigurator from './configurator';
 
+import 'jquery/dist/jquery.js';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
+import 'bootstrap/dist/css/bootstrap.css';
+
 class FormGenerator extends React.Component {
     constructor(props) {
         super(props);
