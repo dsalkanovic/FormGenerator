@@ -37,13 +37,9 @@ class FormConfigurator extends React.Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col">
+                    <div className="col container-pane-wrapper">
                         <Navigator pages={pages} height={height} />
-                    </div>
-                    <div className="col">
                         <Properties pages={pages} height={height} />
-                    </div>
-                    <div className="col-6">
                         <Preview pages={pages} height={height} />
                     </div>
                 </div>

@@ -23,7 +23,7 @@ export default function(state = defaultState, action) {
 export const setDimensions = rect => async dispatch => {
     const screen = { width: window.innerWidth, height: window.innerHeight };
     const topOffset = rect ? rect.top : 0;
-    const panel = { height: screen.height - topOffset - 70 };
+    const panel = { height: screen.height - topOffset - 59 };
 
     dispatch({ type: UI_SET_DIMENSIONS, data: { screen, panel } });
 };

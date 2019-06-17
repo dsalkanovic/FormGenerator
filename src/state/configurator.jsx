@@ -1,9 +1,17 @@
-import { CONFIGURATOR_SELECT_ITEM, CONFIGURATOR_SET_FORM, CONFIGURATOR_SET_PAGES, CONFIGURATOR_SET_GROUPS, CONFIGURATOR_SET_FIELDS } from './actions';
+import {
+    CONFIGURATOR_SELECT_ITEM,
+    CONFIGURATOR_SHOW_PROPERTIES,
+    CONFIGURATOR_SET_FORM,
+    CONFIGURATOR_SET_PAGES,
+    CONFIGURATOR_SET_GROUPS,
+    CONFIGURATOR_SET_FIELDS
+} from './actions';
 import { TEST_PAGES } from '../testData';
 import { FiledTypes } from '../models/definitions/fieldTypes';
 
 const defaultState = {
     selected: {},
+    properties: {},
     form: undefined,
     pages: TEST_PAGES
 };
@@ -38,7 +46,8 @@ export default function(state = defaultState, action) {
             }
             return { ...state, selected };
 
-            
+        case CONFIGURATOR_SHOW_PROPERTIES:
+            return { ...state, properties: { page: action.page, group: action.group, field: action.field } };
 
         case CONFIGURATOR_SET_FORM:
             return { ...state, form: action.form };
@@ -65,6 +74,10 @@ export default function(state = defaultState, action) {
 
 export const selectItem = item => async dispatch => {
     dispatch({ type: CONFIGURATOR_SELECT_ITEM, item });
+};
+
+export const showProperties = (page, group, field) => async dispatch => {
+    dispatch({ type: CONFIGURATOR_SHOW_PROPERTIES, page, group, field });
 };
 
 export const setForm = form => async dispatch => {

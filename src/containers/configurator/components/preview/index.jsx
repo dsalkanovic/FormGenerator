@@ -11,7 +11,7 @@ class Preview extends React.Component {
         const { pages = [], height } = this.props;
 
         return (
-            <div className="card">
+            <div className="card preview-pane">
                 <div className="card-header">
                     <span className="configurator-title">Preview</span>
                 </div>
