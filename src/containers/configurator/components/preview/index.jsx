@@ -1,5 +1,6 @@
 import React from 'react';
 import SimpleBar from 'simplebar-react';
+import FieldsTest from '../../../../fieldsTest';
 
 class Preview extends React.Component {
     constructor(props) {
@@ -18,6 +19,9 @@ class Preview extends React.Component {
                 <SimpleBar style={{ height }}>
                     <div className="card-body" ref={this.container}>
                         {pages.length} pages here
+                        <div>
+                            <FieldsTest />
+                        </div>
                     </div>
                 </SimpleBar>
             </div>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Map } from 'immutable';
 import SimpleBar from 'simplebar-react';
 import { selectItem, setPages, setGroups, setFields, removeItem } from '../../../../state/configurator';
 import { X } from 'react-feather';
 import { Formik, Form, Field } from 'formik';
+import { FiledTypes } from '../../../../models/definitions/fieldTypes';
 
 class Properties extends React.Component {
     constructor(props) {
@@ -34,6 +36,9 @@ class Properties extends React.Component {
 
         const itemProperties = this.getItemProperties();
         if (!itemProperties) return null;
+
+        console.log('item type', itemProperties.type);
+        new Map(FiledTypes).map((t, k) => console.log(t, k));
 
         return (
             <div className="card properties-pane">
