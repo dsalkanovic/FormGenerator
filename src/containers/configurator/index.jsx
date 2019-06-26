@@ -35,14 +35,10 @@ class FormConfigurator extends React.Component {
         const { height, pages } = this.props;
 
         return (
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col container-pane-wrapper">
-                        <Navigator pages={pages} height={height} />
-                        <Properties pages={pages} height={height} />
-                        <Preview pages={pages} height={height} />
-                    </div>
-                </div>
+            <div className="configurator-wrapper">
+                <Navigator pages={pages} height={height} />
+                <Properties pages={pages} height={height} />
+                <Preview pages={pages} height={height} />
             </div>
         );
     }

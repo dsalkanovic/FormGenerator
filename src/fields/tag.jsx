@@ -1,12 +1,12 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
-import { FormGroup, NumericInput } from '@blueprintjs/core';
+import { FormGroup, Button, TagInput } from '@blueprintjs/core';
 import { uuid } from '../utilities/common';
 
 import './fields.scss';
 
-class NumberField extends React.Component {
-    defaultValue = 0;
+class TagField extends React.Component {
+    defaultValue = [];
 
     onChange = (value, { onChange }) => {
         const { id, name } = this.props;
@@ -16,17 +16,25 @@ class NumberField extends React.Component {
                 type: 'change',
                 id,
                 name,
-                value
+                value: value || []
             }
         });
     };
 
+    clearButton = field => {
+        const { disabled } = this.props;
+        if (field.value.length === 0) return null;
+
+        return <Button disabled={disabled} icon={'cross'} minimal={true} onClick={() => this.onChange([], field)} />;
+    };
+
     render() {
-        const { id = uuid(), name, label, placeholder, info, className, extra } = this.props;
+        const { id = uuid(), name, validate, type = 'text', label, placeholder, info, className, extra } = this.props;
 
         return (
             <Field
                 name={name}
+                validate={validate}
                 render={({ field }) => {
                     return (
                         <FormGroup
@@ -40,16 +48,19 @@ class NumberField extends React.Component {
                             labelInfo={info}
                             className={className}
                         >
-                            <NumericInput
-                                max={Number.MAX_SAFE_INTEGER}
+                            <TagInput
                                 {...field}
                                 {...extra}
                                 id={id}
                                 name={name}
+                                type={type}
                                 placeholder={placeholder}
                                 fill={true}
-                                allowNumericCharactersOnly={false}
-                                onValueChange={v => this.onChange(v, field)}
+                                addOnBlur={true}
+                                tagProps={{ minimal: true }}
+                                rightElement={this.clearButton(field)}
+                                onChange={v => this.onChange(v, field)}
+                                values={field.value || []}
                             />
                         </FormGroup>
                     );
@@ -59,4 +70,4 @@ class NumberField extends React.Component {
     }
 }
 
-export default NumberField;
+export default TagField;

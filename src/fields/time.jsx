@@ -1,12 +1,13 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
-import { FormGroup, NumericInput } from '@blueprintjs/core';
+import { FormGroup } from '@blueprintjs/core';
+import { TimePicker } from '@blueprintjs/datetime';
 import { uuid } from '../utilities/common';
 
 import './fields.scss';
 
-class NumberField extends React.Component {
-    defaultValue = 0;
+class TimeField extends React.Component {
+    defaultValue = '';
 
     onChange = (value, { onChange }) => {
         const { id, name } = this.props;
@@ -22,11 +23,12 @@ class NumberField extends React.Component {
     };
 
     render() {
-        const { id = uuid(), name, label, placeholder, info, className, extra } = this.props;
+        const { id = uuid(), name, validate, label, info, className, useAmPm = true, extra } = this.props;
 
         return (
             <Field
                 name={name}
+                validate={validate}
                 render={({ field }) => {
                     return (
                         <FormGroup
@@ -40,16 +42,15 @@ class NumberField extends React.Component {
                             labelInfo={info}
                             className={className}
                         >
-                            <NumericInput
-                                max={Number.MAX_SAFE_INTEGER}
+                            <TimePicker
                                 {...field}
                                 {...extra}
                                 id={id}
                                 name={name}
-                                placeholder={placeholder}
+                                useAmPm={useAmPm}
+                                selectAllOnFocus={true}
+                                onChange={v => this.onChange(v, field)}
                                 fill={true}
-                                allowNumericCharactersOnly={false}
-                                onValueChange={v => this.onChange(v, field)}
                             />
                         </FormGroup>
                     );
@@ -59,4 +60,4 @@ class NumberField extends React.Component {
     }
 }
 
-export default NumberField;
+export default TimeField;

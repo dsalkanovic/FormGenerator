@@ -1,60 +1,41 @@
-$color-error: #bd0000;
-$color-default: #757575;
+.fg-field-wrapper {
+    margin: 0 -15px;
+}
 
-.form-field {
-    display: inline-block;
-    position: relative;
-    padding-top: 10px;
-    padding-bottom: 10px;
+.fg-field-fill {
+    display: inline-flex;
+    width: 100%;
 
-    &.number-field,
-    &.input-field {
-        .value-label {
-            position: absolute;
-            top: 1px;
-            left: 21px;
-            padding: 0 4px;
-            font-size: 11px;
-            color: $color-default;
-            background-color: #ffffff;
-            text-transform: capitalize;
-        }
+    .bp3-popover-target {
+        width: 100%;
+    }
+}
 
-        .has-errors {
-            input {
-                box-shadow: 0px 0px 0px 1px $color-error;
-                border-color: transparent;
-            }
+.fg-field {
+    &.bp3-form-group {
+        display: inline-flex;
+        padding: 0 15px;
+    }
+
+    @for $i from 1 through 100 {
+        &.width-#{$i} {
+            width: percentage($i/100);
         }
     }
 
-    .validation-indicator {
-        position: absolute;
-        top: 14px;
-        right: 24px;
-        width: 17px;
-        color: $color-default;
+    &.radio-field {
+        // display: inline-flex;
+        padding: 0 15px;
+        position: relative;
+        flex-direction: column;
+
+        .b3-label {
+            display: flex;
+            flex-basis: 100%;
+        }
     }
 
-    .form-control:focus {
-        outline: none;
-        box-shadow: none;
-        border-color: #ced4da;
-    }
-
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active,
-    textarea:-webkit-autofill,
-    textarea:-webkit-autofill:hover,
-    textarea:-webkit-autofill:focus,
-    textarea:-webkit-autofill:active,
-    select:-webkit-autofill,
-    select:-webkit-autofill:hover,
-    select:-webkit-autofill:focus,
-    select:-webkit-autofill:active {
-        -webkit-text-fill-color: unset;
-        -webkit-box-shadow: 0 0 0px 0px transparent inset;
+    .validation-message {
+        color: #a70000;
     }
 }

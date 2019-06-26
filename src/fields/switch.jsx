@@ -1,32 +1,20 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
-import { FormGroup, NumericInput } from '@blueprintjs/core';
+import { FormGroup, Switch } from '@blueprintjs/core';
 import { uuid } from '../utilities/common';
 
 import './fields.scss';
 
-class NumberField extends React.Component {
-    defaultValue = 0;
-
-    onChange = (value, { onChange }) => {
-        const { id, name } = this.props;
-        onChange({
-            persist: () => {},
-            target: {
-                type: 'change',
-                id,
-                name,
-                value
-            }
-        });
-    };
+class SwitchField extends React.Component {
+    defaultValue = false;
 
     render() {
-        const { id = uuid(), name, label, placeholder, info, className, extra } = this.props;
+        const { id = uuid(), name, validate, label, placeholder, info, className, extra } = this.props;
 
         return (
             <Field
                 name={name}
+                validate={validate}
                 render={({ field }) => {
                     return (
                         <FormGroup
@@ -40,16 +28,14 @@ class NumberField extends React.Component {
                             labelInfo={info}
                             className={className}
                         >
-                            <NumericInput
-                                max={Number.MAX_SAFE_INTEGER}
+                            <Switch
                                 {...field}
                                 {...extra}
                                 id={id}
                                 name={name}
-                                placeholder={placeholder}
-                                fill={true}
-                                allowNumericCharactersOnly={false}
-                                onValueChange={v => this.onChange(v, field)}
+                                checked={!!field.value}
+                                label={placeholder}
+                                onChange={field.onChange}
                             />
                         </FormGroup>
                     );
@@ -59,4 +45,4 @@ class NumberField extends React.Component {
     }
 }
 
-export default NumberField;
+export default SwitchField;
