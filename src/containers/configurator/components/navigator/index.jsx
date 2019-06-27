@@ -1,22 +1,16 @@
 import React from 'react';
-import { Card, Elevation, Button } from '@blueprintjs/core';
+import { PanelStack } from '@blueprintjs/core';
+import PagesPanel from './panels/pages';
 
 class Navigator extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
     render() {
+        const { height } = this.props;
+
         return (
-            <div className="configurator-navigator">
-                <Card elevation={Elevation.ONE}>
-                    <h4 className="configurator-pane-title">navigator</h4>
-                    <div className="bp3-elevation-1 mg-b-5">
-                        <div className="pd-10">page 1</div>
-                        <Button onClick={() => console.log('aaaa')} minimal={true} icon="chevron-right" />
-                    </div>
-                </Card>
+            <div className="configurator-navigator" style={{ maxHeight: `${height - 70}px` }}>
+                <div className="panel-wrapper bp3-elevation-1">
+                    <PanelStack initialPanel={{ component: PagesPanel }} showPanelHeader={false} />
+                </div>
             </div>
         );
     }

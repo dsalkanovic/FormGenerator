@@ -15,11 +15,106 @@
         letter-spacing: 0px;
     }
 
+    .configurator-panel-title {
+        font-weight: 300;
+        color: #333;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0px;
+    }
+
     .configurator-navigator {
         display: flex;
         flex-direction: row;
         flex: 0 1 250px;
         padding: 5px;
+
+        .panel-wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-grow: 1;
+            border-radius: 3px;
+
+            .bp3-panel-stack {
+                flex-grow: 1;
+                border-radius: 3px;
+
+                .fg-panel-container {
+                    flex-grow: 1;
+                    overflow: hidden;
+
+                    .bp3-menu {
+                        padding: 5px 0;
+                    }
+
+                    .fg-panel-header {
+                        flex-grow: 1;
+                        padding: 0px 5px 5px;
+                        margin: 0px;
+                        border-radius: 0px;
+                        border-bottom: 1px solid rgba(16, 22, 26, 0.1);
+                        box-shadow: none;
+                        display: flex;
+                        justify-content: space-between;
+
+                        .fg-panel-title {
+                            display: inline;
+                            color: #333;
+                            padding: 5px;
+                            vertical-align: middle;
+                            line-height: 20px;
+                            cursor: default;
+                        }
+                    }
+
+                    .fg-panel-item {
+                        display: flex;
+                        padding: 5px;
+                        border-bottom: 1px solid rgba(16, 22, 26, 0.1);
+                        svg {
+                            color: rgba(16, 22, 26, 0.35);
+                        }
+
+                        .item-title {
+                            display: inline;
+                            flex-grow: 1;
+                            padding: 5px 10px;
+                            line-height: 20px;
+                            font-weight: 300;
+                            font-size: 0.95rem;
+                            cursor: grab;
+                        }
+
+                        &.dragged {
+                            background-color: #e5e9ec;
+                            border-bottom: none;
+                            cursor: grabbing;
+                            * {
+                                cursor: grabbing;
+                            }
+
+                            button {
+                                visibility: hidden;
+                            }
+                        }
+
+                        &.selected {
+                            background-color: rgba(16, 22, 26, 0.03);
+                            .item-title {
+                                font-weight: 400;
+                            }
+                            svg {
+                                color: rgba(16, 22, 26, 0.75);
+                            }
+                        }
+                    }
+
+                    .draggable-area div div:last-of-type .fg-panel-item {
+                        border-bottom: none;
+                    }
+                }
+            }
+        }
     }
     .configurator-properties {
         display: flex;

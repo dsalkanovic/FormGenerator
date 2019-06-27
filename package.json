@@ -17,6 +17,7 @@
         "rc-upload": "^2.6.7",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
+        "react-draggable-list": "^4.0.3",
         "react-movable": "^2.0.2",
         "react-redux": "^7.0.3",
         "react-scripts": "3.0.1",

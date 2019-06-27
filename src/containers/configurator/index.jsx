@@ -32,21 +32,20 @@ class FormConfigurator extends React.Component {
     };
 
     render() {
-        const { height, pages } = this.props;
+        const { height } = this.props;
 
         return (
             <div className="configurator-wrapper">
-                <Navigator pages={pages} height={height} />
-                <Properties pages={pages} height={height} />
-                <Preview pages={pages} height={height} />
+                <Navigator height={height} />
+                <Properties height={height} />
+                <Preview height={height} />
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    pages: state.configurator.pages,
-    height: state.ui.panel.height
+    height: state.ui.screen.height
 });
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
