@@ -132,6 +132,32 @@
         }
     }
 
+    .configurator-properties,
+    .configurator-preview {
+        .bp3-card {
+            padding: 0;
+        }
+        .fg-panel-header {
+            display: flex;
+            justify-content: space-between;
+            // margin: -15px -20px 0;
+            padding: 5px;
+            // width: calc(100% + 40px);
+            border-radius: 3px 3px 0 0;
+            border-bottom: 1px solid rgba(16, 22, 26, 0.1);
+            box-shadow: none;
+
+            .fg-panel-title {
+                display: inline;
+                color: #333;
+                padding: 5px;
+                vertical-align: middle;
+                line-height: 20px;
+                cursor: default;
+            }
+        }
+    }
+
     .bp3-card {
         display: block;
         width: 100%;
