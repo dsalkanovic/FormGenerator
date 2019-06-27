@@ -7,7 +7,7 @@ class Navigator extends React.Component {
         const { height } = this.props;
 
         return (
-            <div className="configurator-navigator" style={{ maxHeight: `${height - 70}px` }}>
+            <div className="configurator-navigator" style={{ height: `${height - 70}px` }}>
                 <div className="panel-wrapper bp3-elevation-1">
                     <PanelStack initialPanel={{ component: PagesPanel }} showPanelHeader={false} />
                 </div>
