@@ -1,7 +1,7 @@
 {
     "name": "form-generator",
     "version": "0.1.0",
-    "homepage": "https://github.com/dsalkanovic/FormGenerator",
+    "homepage": "https://dsalkanovic.github.io/FormGenerator",
     "private": false,
     "dependencies": {
         "@blueprintjs/core": "^3.16.2",
