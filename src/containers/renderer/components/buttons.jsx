@@ -31,11 +31,10 @@ class FormButtons extends React.Component {
                             {save.text}
                         </Button>
                     )}
-                    {!!next.show && (
-                        <Button type="submit" intent={Intent.SUCCESS}>
-                            {next.text}
-                        </Button>
-                    )}
+
+                    <Button type="submit" intent={Intent.SUCCESS}>
+                        {next.text}
+                    </Button>
                 </div>
             </Card>
         );

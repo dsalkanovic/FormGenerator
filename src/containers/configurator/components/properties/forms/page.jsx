@@ -108,6 +108,12 @@ class PageProperties extends React.Component {
                                     placeholder={'Show save button ?'}
                                     className="fg-field width-100"
                                 />
+                                <Fields.Input
+                                    name={'buttons.next.text'}
+                                    label={'Next label'}
+                                    placeholder={'Next label'}
+                                    className="fg-field width-100"
+                                />
                             </PropertiesGroup>
 
                             <div className="mg-x-15 mg-t-20">
