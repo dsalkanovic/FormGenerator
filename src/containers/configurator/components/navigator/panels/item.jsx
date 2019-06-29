@@ -5,7 +5,10 @@ class ListItem extends React.Component {
     render() {
         const {
             item: {
-                data: { title },
+                data: {
+                    title,
+                    type: { icon }
+                },
                 selected,
                 onSelect,
                 openPanel
@@ -20,7 +23,11 @@ class ListItem extends React.Component {
                 <div className="item-title ellipsis" {...dragHandleProps}>
                     {title}
                 </div>
-                {openPanel && <Button minimal={true} icon="caret-right" onClick={openPanel} />}
+                {!!openPanel ? (
+                    <Button minimal={true} icon="caret-right" onClick={openPanel} />
+                ) : (
+                    <Button className="fg-type-indicator" disabled={true} icon={icon} />
+                )}
             </div>
         );
     }

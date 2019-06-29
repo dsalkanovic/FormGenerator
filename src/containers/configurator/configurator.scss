@@ -75,6 +75,11 @@
                             color: rgba(16, 22, 26, 0.35);
                         }
 
+                        .fg-type-indicator {
+                            cursor: default;
+                            background-color: rgba(206, 217, 224, 0.25);
+                        }
+
                         .item-title {
                             display: inline;
                             flex-grow: 1;
@@ -86,7 +91,7 @@
                         }
 
                         &.dragged {
-                            background-color: #e5e9ec;
+                            background-color: #e5e9ec !important;
                             border-bottom: none;
                             cursor: grabbing;
                             * {
@@ -121,6 +126,12 @@
         flex-direction: row;
         flex: 1 1 250px;
         padding: 5px;
+
+        .fg-properties-divider {
+            width: calc(100% + 10px);
+            margin: 0 -5px 10px;
+            border-bottom: 1px solid rgba(16, 22, 26, 0.1);
+        }
     }
     .configurator-preview {
         display: flex;

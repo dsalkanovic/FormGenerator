@@ -9,6 +9,11 @@ import { selectItem, setFields } from '../../../../../state/configurator';
 import { Field } from '../../../../../models/field';
 
 class FieldsPanel extends React.Component {
+    componentDidMount() {
+        const { page, group, fields = [], selected: { field } = {}, selectItem } = this.props;
+        if (!field && fields.length > 0) selectItem(page, group, fields[0]);
+    }
+
     renderBreadcrumb = ({ text, onClick }) => (
         <div className={`ellipsis ${Classes.BREADCRUMB} ${Classes.BREADCRUMB_CURRENT}`} onClick={onClick}>
             {text}

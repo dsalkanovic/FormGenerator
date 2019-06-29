@@ -31,6 +31,7 @@ class InputField extends React.Component {
                             <InputGroup
                                 {...field}
                                 {...extra}
+                                onChange={e => field.onChange(e)}
                                 id={id}
                                 name={name}
                                 type={type}

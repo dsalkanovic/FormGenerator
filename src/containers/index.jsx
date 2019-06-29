@@ -8,8 +8,11 @@ import {
     NavbarGroup,
     NavbarDivider,
     NavbarHeading,
+    Menu,
+    MenuItem,
+    Popover,
     Button,
-    Classes
+    MenuDivider
 } from '@blueprintjs/core';
 
 class FormGenerator extends React.Component {
@@ -17,6 +20,7 @@ class FormGenerator extends React.Component {
         super(props);
         this.state = {};
     }
+
     render() {
         FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -27,7 +31,20 @@ class FormGenerator extends React.Component {
                         <NavbarGroup>
                             <NavbarHeading>Form Generator</NavbarHeading>
                             <NavbarDivider />
-                            <Button className={Classes.MINIMAL} icon="floppy-disk" text="Save" />
+                            <Popover
+                                content={
+                                    <Menu>
+                                        <MenuItem icon="floppy-disk" text="Save" />
+                                        <MenuDivider />
+                                        <MenuItem icon="new-object" text="New" />
+                                        <MenuDivider />
+                                        <MenuItem icon="export" text="Export" />
+                                        <MenuItem icon="import" text="Import" />
+                                    </Menu>
+                                }
+                            >
+                                <Button minimal={true} text="File" />
+                            </Popover>
                         </NavbarGroup>
                     </Navbar>
                     <div className="stage">

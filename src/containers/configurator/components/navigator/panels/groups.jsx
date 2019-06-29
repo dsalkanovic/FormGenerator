@@ -10,6 +10,11 @@ import { setGroups, selectItem } from '../../../../../state/configurator';
 import { Group } from '../../../../../models/group';
 
 class GroupsPanel extends React.Component {
+    componentDidMount() {
+        const { page, groups = [], selected: { group } = {}, selectItem } = this.props;
+        if (!group && groups.length > 0) selectItem(page, groups[0]);
+    }
+
     openFieldsPanel = group => {
         const { page, openPanel } = this.props;
         openPanel({ component: FieldsPanel, props: { page, group } });

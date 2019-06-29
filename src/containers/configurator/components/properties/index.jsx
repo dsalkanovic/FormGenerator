@@ -3,11 +3,28 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Card } from '@blueprintjs/core';
 import SimpleBar from 'simplebar-react';
+import GroupProperties from './forms/group';
+import PageProperties from './forms/page';
 
 class Properties extends React.Component {
-    render() {
-        const { height, selected = {} } = this.props;
+    renderPropertiesForm = () => {
+        const { selected = {} } = this.props;
         const { page, group, field } = selected;
+        if (!!field) {
+            return <div>field form ...</div>;
+        }
+        if (!!group) {
+            return <GroupProperties />;
+        }
+        if (!!page) {
+            return <PageProperties />;
+        }
+
+        return <div className="pd-20 tx-center">Select item to show properties.</div>;
+    };
+
+    render() {
+        const { height } = this.props;
 
         return (
             <div className="configurator-properties" style={{ height: `${height - 70}px` }}>
@@ -18,11 +35,7 @@ class Properties extends React.Component {
                         </div>
                     </Card>
                     <SimpleBar style={{ height: `${height - 121}px` }}>
-                        <div className="pd-20">
-                            <p>{JSON.stringify(page)}</p>
-                            <p>{JSON.stringify(group)}</p>
-                            <p>{JSON.stringify(field)}</p>
-                        </div>
+                        <div className="pd-y-20 pd-x-5">{this.renderPropertiesForm()}</div>
                     </SimpleBar>
                 </Card>
             </div>

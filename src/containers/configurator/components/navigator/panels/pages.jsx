@@ -10,6 +10,18 @@ import { setPages, selectItem } from '../../../../../state/configurator';
 import { Page } from '../../../../../models/page';
 
 class PagesPanel extends React.Component {
+    componentDidMount() {
+        const { pages = [], selected: { page } = {}, selectItem } = this.props;
+        if (!page && pages.length > 0) selectItem(pages[0]);
+    }
+
+    addPage = async () => {
+        const { pages = [], setPages, selectItem } = this.props;
+        const newPage = new Page({ title: 'New Page', order: pages.length });
+        await setPages([...pages, newPage]);
+        selectItem(newPage);
+    };
+
     openGroupsPanel = page => {
         const { openPanel } = this.props;
         openPanel({ component: GroupsPanel, props: { page } });
@@ -25,11 +37,7 @@ class PagesPanel extends React.Component {
                         <div className="fg-panel-title">
                             <span className="pd-l-5">Pages</span>
                         </div>
-                        <Button
-                            icon="plus"
-                            minimal={true}
-                            onClick={() => setPages([...pages, new Page({ title: 'New Page', order: pages.length })])}
-                        />
+                        <Button icon="plus" minimal={true} onClick={this.addPage} />
                     </Card>
                     <SimpleBar style={{ height: `${height - 121}px` }}>
                         <div className="draggable-area" ref={el => (this.draggable = el)}>
