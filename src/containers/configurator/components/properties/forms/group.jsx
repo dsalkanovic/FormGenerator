@@ -58,28 +58,31 @@ class GroupProperties extends React.Component {
                                 placeholder={'Block (show as block?)'}
                                 className="fg-field width-100"
                             />
-                            <Fields.Number
+                            <Fields.Slider
                                 label={'Width'}
                                 info={'(desktop)'}
                                 name={'width.desktop'}
+                                submitOnChange={true}
                                 extra={{
-                                    min: 10,
+                                    min: 25,
                                     max: 100,
-                                    leftIcon: 'percentage'
+                                    stepSize: 5,
+                                    labelStepSize: 25
                                 }}
-                                placeholder={'Width (desktop)'}
-                                className="fg-field width-100"
+                                className="fg-field width-100 mg-b-0"
                             />
-                            <Fields.Number
+                            <Fields.Slider
+                                disabled={true}
                                 label={'Width'}
                                 info={'(mobile)'}
                                 name={'width.mobile'}
+                                submitOnChange={true}
                                 extra={{
-                                    min: 10,
+                                    min: 25,
                                     max: 100,
-                                    leftIcon: 'percentage'
+                                    stepSize: 5,
+                                    labelStepSize: 25
                                 }}
-                                placeholder={'Width (mobile)'}
                                 className="fg-field width-100"
                             />
                             <div className="pd-15">

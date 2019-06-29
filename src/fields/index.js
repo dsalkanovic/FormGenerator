@@ -8,6 +8,7 @@ import DateRangeField from './dateRange';
 import TimeField from './time';
 import FileField from './file';
 import NumberField from './number';
+import SliderField from './slider';
 import SelectField from './select';
 import MultiSelectField from './multiSelect';
 
@@ -22,6 +23,7 @@ export const Fields = {
     Time: TimeField,
     File: FileField,
     Number: NumberField,
+    Slider: SliderField,
     Select: SelectField,
     MultiSelect: MultiSelectField
 };

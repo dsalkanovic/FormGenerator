@@ -1,12 +1,14 @@
 import React from 'react';
 import { Card } from '@blueprintjs/core';
+import GroupRenderer from './group';
 
 class PageRenderer extends React.Component {
     render() {
         const { progress, page } = this.props;
         const {
             title,
-            header: { description, image, show, showProgress }
+            header: { description, image, show, showProgress },
+            groups = []
         } = page;
 
         return (
@@ -30,11 +32,15 @@ class PageRenderer extends React.Component {
                                 }}
                             />
                         )}
-                        <h3 className="mg-0">{title}</h3>
+                        <h2 className="mg-0">{title}</h2>
                         {!!description && <span className="bp3-text-small bp3-text-muted">{description}</span>}
                     </Card>
                 )}
-                <div>groups go here ...</div>
+                <div className="fg-groups-wrapper">
+                    {groups.map((group, i) => (
+                        <GroupRenderer key={i} group={group} />
+                    ))}
+                </div>
             </React.Fragment>
         );
     }

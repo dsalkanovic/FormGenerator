@@ -18,7 +18,8 @@ export const TEST_PAGES = [
             new Group({
                 title: 'Personal Info',
                 description:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a rutrum tellus. Fusce ut mauris id nunc bibendum fringilla. Cras rutrum non ipsum in malesuada. Aliquam semper est vitae magna laoreet sagittis. Integer maximus blandit dictum. Fusce iaculis lacus id quam blandit rhoncus. Sed accumsan massa ac turpis congue fringilla. Etiam rutrum elit non est lacinia, ut posuere velit fringilla. Sed vehicula pharetra elit in suscipit. Phasellus nec ultrices dui. Cras lectus est, fringilla ut velit ut, commodo ullamcorper justo. Maecenas facilisis diam in ante venenatis, sit amet porta nisi auctor. Aenean a ante ut nisi efficitur lacinia.',
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a rutrum tellus. Fusce ut mauris id nunc bibendum fringilla.',
+                width: { desktop: 100, mobile: 100 },
                 fields: [
                     new Field({ title: 'Name' }),
                     new Field({ title: 'Email' }),
@@ -30,12 +31,13 @@ export const TEST_PAGES = [
             }),
             new Group({
                 title: 'Location',
-                fields: [
-                    new Field({ title: 'Country' }),
-                    new Field({ title: 'City' }),
-                    new Field({ title: 'Address' }),
-                    new Field({ title: 'Post Code' })
-                ]
+                width: { desktop: 50, mobile: 100 },
+                fields: [new Field({ title: 'Country' }), new Field({ title: 'City' })]
+            }),
+            new Group({
+                title: 'Some other group',
+                width: { desktop: 50, mobile: 100 },
+                fields: [new Field({ title: 'Address' }), new Field({ title: 'Post Code' })]
             })
         ]
     }),

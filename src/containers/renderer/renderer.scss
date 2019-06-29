@@ -61,3 +61,23 @@
         }
     }
 }
+
+.fg-groups-wrapper {
+    display: block;
+    margin: -10px;
+}
+
+.fg-group-renderer {
+    display: inline-block !important;
+    padding: 10px;
+    vertical-align: top;
+    transition: all ease-in-out 250ms;
+
+    .bp3-card {
+        padding: 20px !important;
+    }
+
+    .fg-group-header {
+        width: 100%;
+    }
+}

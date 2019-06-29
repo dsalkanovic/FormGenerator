@@ -1,16 +1,16 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
-import { FormGroup, NumericInput } from '@blueprintjs/core';
+import { FormGroup, Slider } from '@blueprintjs/core';
 import { uuid } from '../utilities/common';
 
 import './fields.scss';
 
-class NumberField extends React.Component {
+class SliderField extends React.Component {
     defaultValue = 0;
 
-    onChange = (value, { onChange }) => {
-        const { id, name } = this.props;
-        onChange({
+    onChange = async (value, { onChange }, { submitForm }) => {
+        const { id, name, submitOnChange = false } = this.props;
+        await onChange({
             persist: () => {},
             target: {
                 type: 'change',
@@ -19,15 +19,27 @@ class NumberField extends React.Component {
                 value
             }
         });
+
+        if (!!submitOnChange) {
+            submitForm();
+        }
     };
 
     render() {
-        const { id = uuid(), name, label, placeholder, info, className, extra } = this.props;
+        const {
+            id = uuid(),
+            name,
+            label,
+            info,
+            className,
+            extra = { min: 1, max: 100, stepSize: 1, labelStepSize: 100 },
+            disabled = false
+        } = this.props;
 
         return (
             <Field
                 name={name}
-                render={({ field }) => {
+                render={({ field, form }) => {
                     return (
                         <FormGroup
                             helperText={
@@ -40,17 +52,13 @@ class NumberField extends React.Component {
                             labelInfo={info}
                             className={className}
                         >
-                            <NumericInput
-                                min={Number.MIN_SAFE_INTEGER}
-                                max={Number.MAX_SAFE_INTEGER}
+                            <Slider
+                                disabled={disabled}
                                 {...field}
                                 {...extra}
-                                id={id}
-                                name={name}
-                                placeholder={placeholder}
-                                fill={true}
-                                allowNumericCharactersOnly={false}
-                                onValueChange={v => this.onChange(v, field)}
+                                onChange={v => this.onChange(v, field, form)}
+                                value={field.value}
+                                vertical={false}
                             />
                         </FormGroup>
                     );
@@ -60,4 +68,4 @@ class NumberField extends React.Component {
     }
 }
 
-export default NumberField;
+export default SliderField;
