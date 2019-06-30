@@ -39,3 +39,12 @@
         color: #a70000;
     }
 }
+
+.fg-date-field {
+    .bp3-popover-wrapper {
+        display: block;
+        span.bp3-popover-target {
+            display: block;
+        }
+    }
+}

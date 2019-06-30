@@ -5,27 +5,27 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Button } from '@blueprintjs/core';
 import { Fields } from '../../../../../fields';
-import { setGroups, selectItem } from '../../../../../state/configurator';
+import { setFields, selectItem } from '../../../../../state/configurator';
 
-class GroupProperties extends React.Component {
+class FieldProperties extends React.Component {
     onSubmit = values => {
-        const { setGroups, page, groups = [] } = this.props;
-        setGroups(page, [...groups.map(g => (g.id === values.id ? { ...g, ...values } : g))]);
+        const { setFields, page, group, fields = [] } = this.props;
+        setFields(page, group, [...fields.map(f => (f.id === values.id ? { ...f, ...values } : f))]);
     };
 
     onRemove = async () => {
-        const { selectItem, setGroups, page, groups, group } = this.props;
-        await selectItem(page);
-        setGroups(page, [...groups.filter(g => g.id !== group.id)]);
+        const { selectItem, setFields, page, group, fields, field } = this.props;
+        await selectItem(page, group);
+        setFields(page, group, [...fields.filter(f => f.id !== field.id)]);
     };
 
     render() {
-        const { group } = this.props;
+        const { field } = this.props;
 
         return (
             <Formik
                 enableReinitialize={true}
-                initialValues={{ ...group }}
+                initialValues={{ ...field }}
                 validationSchema={Yup.object().shape({})}
                 onSubmit={this.onSubmit}
                 render={({ handleChange, submitForm }) => {
@@ -55,11 +55,6 @@ class GroupProperties extends React.Component {
                                 placeholder={'Description'}
                                 className="fg-field width-100"
                             />
-                            <Fields.Checkbox
-                                name={'block'}
-                                placeholder={'Block (show as block?)'}
-                                className="fg-field width-100"
-                            />
                             <Fields.Slider
                                 label={'Width'}
                                 info={'(desktop)'}
@@ -87,6 +82,7 @@ class GroupProperties extends React.Component {
                                 }}
                                 className="fg-field width-100"
                             />
+
                             <div className="pd-15">
                                 <Button
                                     type="button"
@@ -114,18 +110,23 @@ const mapStateToProps = state => {
     const groups = (page || {}).groups;
     const group = (groups || []).find(g => g.id === selected.group.id);
 
+    const fields = (group || {}).fields;
+    const field = (fields || []).find(f => f.id === selected.field.id);
+
     return {
         selected,
         pages,
         page,
         groups,
-        group
+        group,
+        fields,
+        field
     };
 };
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            setGroups,
+            setFields,
             selectItem
         },
         dispatch
@@ -134,4 +135,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(GroupProperties);
+)(FieldProperties);

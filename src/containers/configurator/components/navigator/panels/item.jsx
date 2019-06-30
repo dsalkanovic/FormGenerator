@@ -5,10 +5,7 @@ class ListItem extends React.Component {
     render() {
         const {
             item: {
-                data: {
-                    title,
-                    type: { icon }
-                },
+                data: { title, definition: { icon } = {} },
                 selected,
                 onSelect,
                 openPanel

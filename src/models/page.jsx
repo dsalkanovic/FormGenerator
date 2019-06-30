@@ -1,6 +1,6 @@
 import { uuid } from '../utilities/common';
 import { Group } from './group';
-import { FiledTypes } from './definitions/fieldTypes';
+import { FieldTypes } from './definitions/fieldTypes';
 
 export class Page {
     id;
@@ -14,7 +14,7 @@ export class Page {
 
     constructor(page = {}) {
         const {
-            id = uuid(),
+            id = uuid(8),
             title = 'New Page',
             description = '',
             header = {},
@@ -26,7 +26,7 @@ export class Page {
 
         this.id = id;
         this.title = title;
-        this.type = FiledTypes.Page;
+        this.type = FieldTypes.Page;
         this.description = description;
         this.header = {
             description: '',

@@ -1,5 +1,5 @@
 import { uuid } from '../utilities/common';
-import { FiledTypes } from './definitions/fieldTypes';
+import { FieldTypes, buildTypeDefinitionDetails } from './definitions/fieldTypes';
 
 export class Field {
     id;
@@ -12,9 +12,9 @@ export class Field {
     visibleIf;
 
     constructor({
-        id = uuid(),
-        type = FiledTypes.Text,
-        definition,
+        id = uuid(8),
+        type = FieldTypes.Text,
+        definition = {},
         width = { mobile: 100, desktop: 100 },
         title = 'New Field',
         description,
@@ -26,7 +26,7 @@ export class Field {
         this.description = description;
 
         this.type = type;
-        this.definition = this.type.buildDefinition(definition);
+        this.definition = buildTypeDefinitionDetails(type, { ...this.definition, ...definition });
         this.width = width;
 
         this.order = order;

@@ -1,7 +1,7 @@
 import { Page } from './models/page';
 import { Group } from './models/group';
 import { Field } from './models/field';
-import { FiledTypes } from './models/definitions/fieldTypes';
+import { FieldTypes } from './models/definitions/fieldTypes';
 
 export const TEST_PAGES = [
     new Page({
@@ -21,12 +21,17 @@ export const TEST_PAGES = [
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a rutrum tellus. Fusce ut mauris id nunc bibendum fringilla.',
                 width: { desktop: 100, mobile: 100 },
                 fields: [
-                    new Field({ title: 'Name' }),
-                    new Field({ title: 'Email' }),
-                    new Field({ title: 'Age', type: FiledTypes.Number }),
-                    new Field({ title: 'Sex', type: FiledTypes.Select }),
-                    new Field({ title: 'Date of birth', type: FiledTypes.Date }),
-                    new Field({ title: 'Eligible', type: FiledTypes.Boolean })
+                    new Field({ title: 'Name', width: { desktop: 50, mobile: 100 } }),
+                    new Field({ title: 'Email', width: { desktop: 50, mobile: 100 } }),
+                    new Field({ title: 'Age', width: { desktop: 50, mobile: 100 }, type: FieldTypes.Number }),
+                    new Field({ title: 'Sex', width: { desktop: 50, mobile: 100 }, type: FieldTypes.Select }),
+                    new Field({ title: 'Date of birth', width: { desktop: 50, mobile: 100 }, type: FieldTypes.Date }),
+                    new Field({
+                        title: 'Eligible',
+                        description: 'Is Eligible ?',
+                        width: { desktop: 50, mobile: 100 },
+                        type: FieldTypes.Boolean
+                    })
                 ]
             }),
             new Group({

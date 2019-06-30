@@ -56,7 +56,7 @@ class DateField extends React.Component {
                             label={label}
                             labelFor={id}
                             labelInfo={info}
-                            className={className}
+                            className={`${className} fg-date-field`}
                         >
                             <DateInput
                                 {...field}

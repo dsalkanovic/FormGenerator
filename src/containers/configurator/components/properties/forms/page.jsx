@@ -9,13 +9,8 @@ import { setPages, selectItem } from '../../../../../state/configurator';
 import PropertiesGroup from '../components/propertiesGroup';
 
 class PageProperties extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
     onSubmit = values => {
-        const { setPages, pages } = this.props;
+        const { setPages, pages = [] } = this.props;
         setPages([...pages.map(p => (p.id === values.id ? { ...p, ...values } : p))]);
     };
 
@@ -42,6 +37,13 @@ class PageProperties extends React.Component {
                                 submitForm();
                             }}
                         >
+                            <Fields.Input
+                                name={'id'}
+                                label={'Property'}
+                                info={'(form unique)'}
+                                placeholder={'Property'}
+                                className="fg-field width-100"
+                            />
                             <Fields.Input
                                 name={'title'}
                                 label={'Title'}

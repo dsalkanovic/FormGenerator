@@ -1,6 +1,6 @@
 import { uuid } from '../utilities/common';
 import { Field } from './field';
-import { FiledTypes } from './definitions/fieldTypes';
+import { FieldTypes } from './definitions/fieldTypes';
 
 export class Group {
     id;
@@ -13,7 +13,7 @@ export class Group {
     fields;
 
     constructor({
-        id = uuid(),
+        id = uuid(8),
         title = 'New Group',
         description = '',
         block = true,
@@ -24,7 +24,7 @@ export class Group {
     }) {
         this.id = id;
         this.title = title;
-        this.type = FiledTypes.Group;
+        this.type = FieldTypes.Group;
         this.description = description;
         this.block = block;
         this.width = width;

@@ -1,6 +1,7 @@
+import { Map } from 'immutable';
 import { TextFieldDefinition } from './text';
 
-export const FiledTypes = {
+export const FieldTypeDefinitions = {
     Page: { name: 'FT_PAGE', label: 'Page', icon: 'applications', rank: 1000 },
     Group: { name: 'FT_GROUP', label: 'Group', icon: 'application', rank: 900 },
     Text: {
@@ -45,4 +46,28 @@ export const FiledTypes = {
         icon: 'cloud-upload',
         rank: 100
     }
+};
+
+export const FieldTypes = {
+    Page: 'FT_PAGE',
+    Group: 'FT_GROUP',
+    Text: 'FT_TEXT',
+    Number: 'FT_NUMBER',
+    Select: 'FT_SELECT',
+    Boolean: 'FT_BOOLEAN',
+    Date: 'FT_DATE',
+    File: 'FT_FILE'
+};
+
+export const buildTypeDefinitionDetails = (type, definition) => {
+    const typeDefinition = new Map(FieldTypeDefinitions).find(ftd => ftd.name === type) || {};
+    const { name, label, icon, buildDefinition } = typeDefinition;
+    return { name, label, icon, ...(!!buildDefinition ? buildDefinition(definition) : {}) };
+};
+
+export const getFieldTypeMenuItems = () => {
+    return new Map(FieldTypeDefinitions)
+        .toArray()
+        .map(([_, { name, label, icon }]) => ({ name, label, icon }))
+        .filter(f => ![FieldTypes.Page, FieldTypes.Group].includes(f.name));
 };

@@ -37,6 +37,7 @@ class InputField extends React.Component {
                                 type={type}
                                 placeholder={placeholder}
                                 fill={true}
+                                autoComplete={`${uuid()}`}
                             />
                         </FormGroup>
                     );

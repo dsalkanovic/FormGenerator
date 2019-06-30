@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from '@blueprintjs/core';
+import FieldRenderer from './field';
 
 class GroupRenderer extends React.Component {
     renderFields = () => {
@@ -26,9 +27,11 @@ class GroupRenderer extends React.Component {
                         <h3 className="mg-0">{title}</h3>
                         {!!description && <span className="bp3-text-small bp3-text-muted">{description}</span>}
                     </div>
-                    {fields.map((field, i) => (
-                        <div key={i}>field {field.id}</div>
-                    ))}
+                    <div className="fg-fields-wrapper">
+                        {fields.map((field, i) => (
+                            <FieldRenderer key={i} field={field} />
+                        ))}
+                    </div>
                 </Card>
             </div>
         );

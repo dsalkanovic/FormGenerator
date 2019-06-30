@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Card } from '@blueprintjs/core';
 import SimpleBar from 'simplebar-react';
+import FieldProperties from './forms/field';
 import GroupProperties from './forms/group';
 import PageProperties from './forms/page';
 
@@ -11,7 +12,7 @@ class Properties extends React.Component {
         const { selected = {} } = this.props;
         const { page, group, field } = selected;
         if (!!field) {
-            return <div>field form ...</div>;
+            return <FieldProperties />;
         }
         if (!!group) {
             return <GroupProperties />;

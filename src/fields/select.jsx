@@ -9,9 +9,9 @@ import './fields.scss';
 class SelectField extends React.Component {
     defaultValue = '';
 
-    onItemSelect = ({ value }, { onChange }) => {
-        const { id, name } = this.props;
-        onChange({
+    onItemSelect = async ({ value }, { onChange }, { submitForm }) => {
+        const { id, name, submitOnChange } = this.props;
+        await onChange({
             persist: () => {},
             target: {
                 type: 'change',
@@ -20,6 +20,10 @@ class SelectField extends React.Component {
                 value
             }
         });
+
+        if (!!submitOnChange) {
+            submitForm();
+        }
     };
 
     renderOption = (option, { handleClick, modifiers }) => {
@@ -46,7 +50,7 @@ class SelectField extends React.Component {
             <Field
                 name={name}
                 validate={validate}
-                render={({ field }) => {
+                render={({ field, form }) => {
                     const activeOption = options.find(o => o.value === field.value);
 
                     return (
@@ -72,7 +76,7 @@ class SelectField extends React.Component {
                                 className="fg-field-fill"
                                 inputProps={{ className: 'fg-field-fill' }}
                                 noResults={<MenuItem disabled={true} text="-" />}
-                                onItemSelect={v => this.onItemSelect(v, field)}
+                                onItemSelect={v => this.onItemSelect(v, field, form)}
                             >
                                 <Button
                                     rightIcon="caret-down"

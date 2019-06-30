@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DraggableList from 'react-draggable-list';
 import SimpleBar from 'simplebar-react';
-import { Button, Card, Menu, Classes } from '@blueprintjs/core';
+import { Button, Card, Menu, MenuItem, Popover, Classes } from '@blueprintjs/core';
 import ListItem from './item';
 import { selectItem, setFields } from '../../../../../state/configurator';
 import { Field } from '../../../../../models/field';
+import { getFieldTypeMenuItems } from '../../../../../models/definitions/fieldTypes';
 
 class FieldsPanel extends React.Component {
     componentDidMount() {
@@ -37,11 +38,34 @@ class FieldsPanel extends React.Component {
                             />
                             <div className="fg-panel-title">{group.title}</div>
                         </div>
-                        <Button
+
+                        <Popover
+                            content={
+                                <Menu>
+                                    {getFieldTypeMenuItems().map(({ name, label, icon }, i) => (
+                                        <MenuItem
+                                            key={i}
+                                            icon={icon}
+                                            text={label}
+                                            onClick={() =>
+                                                setFields(page, group, [
+                                                    ...fields,
+                                                    new Field({ title: 'New Field', type: name })
+                                                ])
+                                            }
+                                        />
+                                    ))}
+                                </Menu>
+                            }
+                        >
+                            <Button minimal={true} icon="plus" />
+                        </Popover>
+
+                        {/* <Button
                             icon="plus"
                             minimal={true}
                             onClick={() => setFields(page, group, [...fields, new Field({ title: 'New Field' })])}
-                        />
+                        /> */}
                     </Card>
                     <SimpleBar style={{ height: `${height - 121}px` }}>
                         <div className="draggable-area" ref={el => (this.draggable = el)}>
