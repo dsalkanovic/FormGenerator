@@ -38,7 +38,7 @@ class FormGenerator extends React.Component {
                                             icon="eye-open"
                                             text="Preview"
                                             onClick={() =>
-                                                this.props.history.push('/form', {
+                                                this.props.history.push(`${process.env.PUBLIC_URL}/form`, {
                                                     pages: store.getState().configurator.pages
                                                 })
                                             }
