@@ -32,7 +32,7 @@ class FromRenderer extends React.Component {
         rrr.forEach(field => {
             const { property, definition } = field;
             const { validation } = definition;
-            shape[`${page.property}.${group.property}.${property}`] = validationFunc(validation);
+            shape[`${page.property}.${'group.property'}.${property}`] = validationFunc(validation);
         });
 
         debugger;
