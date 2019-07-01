@@ -10,8 +10,8 @@ const root = document.getElementById('root');
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={FormGenerator} />
-            <Route path="/form" component={RenderedForm} />
+            <Route exact path={`${process.env.PUBLIC_URL}/`} component={FormGenerator} />
+            <Route path={`${process.env.PUBLIC_URL}/form`} component={RenderedForm} />
         </Switch>
     </BrowserRouter>,
     root
