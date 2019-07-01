@@ -34,6 +34,15 @@ class FormGenerator extends React.Component {
                             <Popover
                                 content={
                                     <Menu>
+                                        <MenuItem
+                                            icon="eye-open"
+                                            text="Preview"
+                                            onClick={() =>
+                                                this.props.history.push('/form', {
+                                                    pages: store.getState().configurator.pages
+                                                })
+                                            }
+                                        />
                                         <MenuItem icon="floppy-disk" text="Save" />
                                         <MenuDivider />
                                         <MenuItem icon="new-object" text="New" />

@@ -81,8 +81,6 @@ class MultiSelectField extends React.Component {
                 name={name}
                 validate={validate}
                 render={({ field }) => {
-                    // const selectedOptions = options.filter(o => o.value === field.value);
-
                     return (
                         <FormGroup
                             helperText={

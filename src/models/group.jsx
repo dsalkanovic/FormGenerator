@@ -4,6 +4,7 @@ import { FieldTypes } from './definitions/fieldTypes';
 
 export class Group {
     id;
+    property;
     title;
     description;
     block;
@@ -14,6 +15,7 @@ export class Group {
 
     constructor({
         id = uuid(8),
+        property,
         title = 'New Group',
         description = '',
         block = true,
@@ -23,6 +25,7 @@ export class Group {
         fields = []
     }) {
         this.id = id;
+        this.property = property || `group_${id}`;
         this.title = title;
         this.type = FieldTypes.Group;
         this.description = description;

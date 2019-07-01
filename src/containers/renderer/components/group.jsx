@@ -4,18 +4,22 @@ import FieldRenderer from './field';
 
 class GroupRenderer extends React.Component {
     renderFields = () => {
-        const { group: { fields = [], width: { desktop } = { desktop: 100, mobile: 100 } } = {} } = this.props;
+        const { page, group = {} } = this.props;
+        const { fields = [], width: { desktop } = { desktop: 100, mobile: 100 } } = group;
+
         return (
             <div className="fg-group-renderer" style={{ width: `${desktop}%` }}>
-                {fields.map((field, i) => (
-                    <div key={i}>field {field.id}</div>
-                ))}
+                <div className="fg-fields-wrapper pd-t-10">
+                    {fields.map((field, i) => (
+                        <FieldRenderer key={i} page={page} group={group} field={field} definition={field.definition} />
+                    ))}
+                </div>
             </div>
         );
     };
 
     render() {
-        const { group = {} } = this.props;
+        const { page, group = {} } = this.props;
         const { title, description, block, width: { desktop } = { desktop: 100, mobile: 100 }, fields = [] } = group;
 
         if (!block) return this.renderFields();
@@ -29,7 +33,13 @@ class GroupRenderer extends React.Component {
                     </div>
                     <div className="fg-fields-wrapper">
                         {fields.map((field, i) => (
-                            <FieldRenderer key={i} field={field} />
+                            <FieldRenderer
+                                key={i}
+                                page={page}
+                                group={group}
+                                field={field}
+                                definition={field.definition}
+                            />
                         ))}
                     </div>
                 </Card>

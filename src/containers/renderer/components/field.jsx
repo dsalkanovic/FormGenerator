@@ -1,6 +1,7 @@
 import React from 'react';
 import { FieldTypes } from '../../../models/definitions/fieldTypes';
 import { Fields } from '../../../fields';
+import { isEmpty } from '../../../utilities/common';
 
 class FieldRenderer extends React.Component {
     constructor(props) {
@@ -8,69 +9,43 @@ class FieldRenderer extends React.Component {
         this.state = {};
     }
 
+    getFieldName = () => {
+        const { page, group, field } = this.props;
+        let property = '';
+        property = isEmpty(page.property) ? property : `${page.property}`;
+        property = isEmpty(group.property) ? property : `${property}.${group.property}`;
+        property = isEmpty(field.property) ? property : `${property}.${field.property}`;
+        return property;
+    };
+
     getField = () => {
-        const { field: { id, title, description, type } = {} } = this.props;
+        const { field: { id, title, description, type } = {}, definition: { isMulti } = {} } = this.props;
+
+        const fieldProps = {
+            id,
+            name: this.getFieldName(),
+            label: title,
+            description,
+            info: description,
+            placeholder: title,
+            className: 'fg-field-fill'
+        };
 
         switch (type) {
             case FieldTypes.Text:
-                return (
-                    <Fields.Input
-                        id={id}
-                        name={id}
-                        label={title}
-                        info={description}
-                        placeholder={title}
-                        className="fg-field-fill"
-                    />
-                );
+                return !!isMulti ? <Fields.Tag {...fieldProps} /> : <Fields.Input {...fieldProps} />;
 
             case FieldTypes.Number:
-                return (
-                    <Fields.Number
-                        id={id}
-                        name={id}
-                        label={title}
-                        info={description}
-                        placeholder={title}
-                        className="fg-field-fill"
-                    />
-                );
+                return <Fields.Number {...fieldProps} />;
 
             case FieldTypes.Boolean:
-                return (
-                    <Fields.Checkbox
-                        id={id}
-                        name={id}
-                        label={title}
-                        placeholder={description}
-                        className="fg-field-fill"
-                    />
-                );
+                return <Fields.Checkbox {...fieldProps} label={description} info={''} placeholder={title} />;
 
             case FieldTypes.Date:
-                return (
-                    <Fields.Date
-                        id={id}
-                        name={id}
-                        label={title}
-                        info={description}
-                        placeholder={title}
-                        className="fg-field-fill"
-                    />
-                );
+                return <Fields.Date {...fieldProps} />;
 
             case FieldTypes.Select:
-                return (
-                    <Fields.Select
-                        id={id}
-                        name={id}
-                        label={title}
-                        info={description}
-                        placeholder={title}
-                        options={[]}
-                        className="fg-field-fill"
-                    />
-                );
+                return <Fields.Select {...fieldProps} options={[]} />;
 
             default:
                 return (

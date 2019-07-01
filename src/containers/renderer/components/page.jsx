@@ -38,7 +38,7 @@ class PageRenderer extends React.Component {
                 )}
                 <div className="fg-groups-wrapper">
                     {groups.map((group, i) => (
-                        <GroupRenderer key={i} group={group} />
+                        <GroupRenderer key={i} page={page} group={group} />
                     ))}
                 </div>
             </React.Fragment>

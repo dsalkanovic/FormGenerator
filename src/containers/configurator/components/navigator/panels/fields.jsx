@@ -22,7 +22,7 @@ class FieldsPanel extends React.Component {
     );
 
     render() {
-        const { page, group, fields = [], closePanel, height, selected, selectItem, setFields } = this.props;
+        const { page, group = {}, fields = [], closePanel, height, selected, selectItem, setFields } = this.props;
         return (
             <div className="fg-panel-container">
                 <Menu>
@@ -60,12 +60,6 @@ class FieldsPanel extends React.Component {
                         >
                             <Button minimal={true} icon="plus" />
                         </Popover>
-
-                        {/* <Button
-                            icon="plus"
-                            minimal={true}
-                            onClick={() => setFields(page, group, [...fields, new Field({ title: 'New Field' })])}
-                        /> */}
                     </Card>
                     <SimpleBar style={{ height: `${height - 121}px` }}>
                         <div className="draggable-area" ref={el => (this.draggable = el)}>

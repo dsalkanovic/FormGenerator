@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Card, Button, ProgressBar, Popover, Menu, MenuItem } from '@blueprintjs/core';
@@ -8,6 +6,7 @@ import FormButtons from './components/buttons';
 import PageRenderer from './components/page';
 
 import './renderer.scss';
+import { validationFunc } from '../../models/definitions/text';
 
 class FromRenderer extends React.Component {
     constructor(props) {
@@ -19,18 +18,41 @@ class FromRenderer extends React.Component {
         console.log(values);
     };
 
+    getValidationSchema = page => {
+        const shape = {};
+        if (!page) return Yup.object().shape(shape);
+
+        const { groups = [] } = page;
+        if (!groups || groups.length === 0) return Yup.object().shape(shape);
+        const rrr = groups
+            .map(g => g.fields)
+            .flat()
+            .filter(f => !!f.definition && !!f.definition.validation);
+
+        rrr.forEach(field => {
+            const { property, definition } = field;
+            const { validation } = definition;
+            shape[`${page.property}.${group.property}.${property}`] = validationFunc(validation);
+        });
+
+        debugger;
+
+        return Yup.object().shape(shape);
+    };
+
     render() {
         const { pageIndex } = this.state;
         const { pages = [], activePageOverride } = this.props;
         if (pages.length === 0) return null;
 
-        const index = Number.isNaN(activePageOverride) ? pageIndex : activePageOverride;
+        const index = Number.isNaN(Number.parseInt(activePageOverride)) ? pageIndex : activePageOverride;
+        const validationSchema = this.getValidationSchema(pages[index]);
 
         return (
             <Formik
                 enableReinitialize={true}
                 initialValues={{}}
-                validationSchema={Yup.object().shape({})}
+                validationSchema={validationSchema}
                 onSubmit={this.onSubmit}
                 render={() => {
                     return (
@@ -75,10 +97,4 @@ class FromRenderer extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({});
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(FromRenderer);
+export default FromRenderer;

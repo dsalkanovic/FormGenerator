@@ -3,6 +3,7 @@ import { FieldTypes, buildTypeDefinitionDetails } from './definitions/fieldTypes
 
 export class Field {
     id;
+    property;
     title;
     description;
     type;
@@ -13,6 +14,7 @@ export class Field {
 
     constructor({
         id = uuid(8),
+        property,
         type = FieldTypes.Text,
         definition = {},
         width = { mobile: 100, desktop: 100 },
@@ -22,6 +24,7 @@ export class Field {
         visibleIf = true
     }) {
         this.id = id;
+        this.property = property || `field_${id}`;
         this.title = title;
         this.description = description;
 

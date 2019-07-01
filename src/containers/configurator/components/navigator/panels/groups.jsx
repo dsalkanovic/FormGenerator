@@ -15,6 +15,13 @@ class GroupsPanel extends React.Component {
         if (!group && groups.length > 0) selectItem(page, groups[0]);
     }
 
+    addGroup = async () => {
+        const { page, groups = [], setGroups, selectItem } = this.props;
+        const newGroup = new Group({ title: 'New Group', order: groups.length });
+        await setGroups(page, [...groups, newGroup]);
+        selectItem(page, newGroup);
+    };
+
     openFieldsPanel = group => {
         const { page, openPanel } = this.props;
         openPanel({ component: FieldsPanel, props: { page, group } });
@@ -43,11 +50,7 @@ class GroupsPanel extends React.Component {
                             />
                             <div className="fg-panel-title">{page.title}</div>
                         </div>
-                        <Button
-                            icon="plus"
-                            minimal={true}
-                            onClick={() => setGroups(page, [...groups, new Group({ title: 'New Group' })])}
-                        />
+                        <Button icon="plus" minimal={true} onClick={this.addGroup} />
                     </Card>
                     <SimpleBar style={{ height: `${height - 121}px` }}>
                         <div className="draggable-area" ref={el => (this.draggable = el)}>

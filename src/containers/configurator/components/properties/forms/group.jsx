@@ -15,7 +15,7 @@ class GroupProperties extends React.Component {
 
     onRemove = async () => {
         const { selectItem, setGroups, page, groups, group } = this.props;
-        await selectItem(page);
+        await selectItem();
         setGroups(page, [...groups.filter(g => g.id !== group.id)]);
     };
 
@@ -36,13 +36,6 @@ class GroupProperties extends React.Component {
                                 submitForm();
                             }}
                         >
-                            <Fields.Input
-                                name={'id'}
-                                label={'Property'}
-                                info={'(form unique)'}
-                                placeholder={'Property'}
-                                className="fg-field width-100"
-                            />
                             <Fields.Input
                                 name={'title'}
                                 label={'Title'}
@@ -85,6 +78,13 @@ class GroupProperties extends React.Component {
                                     stepSize: 5,
                                     labelStepSize: 25
                                 }}
+                                className="fg-field width-100"
+                            />
+                            <Fields.Input
+                                name={'property'}
+                                label={'Property'}
+                                info={'(groups unique)'}
+                                placeholder={'Property'}
                                 className="fg-field width-100"
                             />
                             <div className="pd-15">

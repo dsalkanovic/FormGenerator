@@ -38,13 +38,6 @@ class PageProperties extends React.Component {
                             }}
                         >
                             <Fields.Input
-                                name={'id'}
-                                label={'Property'}
-                                info={'(form unique)'}
-                                placeholder={'Property'}
-                                className="fg-field width-100"
-                            />
-                            <Fields.Input
                                 name={'title'}
                                 label={'Title'}
                                 placeholder={'Title'}
@@ -117,6 +110,14 @@ class PageProperties extends React.Component {
                                     className="fg-field width-100"
                                 />
                             </PropertiesGroup>
+
+                            <Fields.Input
+                                name={'property'}
+                                label={'Property'}
+                                info={'(pages unique)'}
+                                placeholder={'Property'}
+                                className="fg-field width-100"
+                            />
 
                             <div className="mg-x-15 mg-t-20">
                                 <Button

@@ -61,8 +61,8 @@ export const FieldTypes = {
 
 export const buildTypeDefinitionDetails = (type, definition) => {
     const typeDefinition = new Map(FieldTypeDefinitions).find(ftd => ftd.name === type) || {};
-    const { name, label, icon, buildDefinition } = typeDefinition;
-    return { name, label, icon, ...(!!buildDefinition ? buildDefinition(definition) : {}) };
+    const { icon, buildDefinition } = typeDefinition;
+    return { icon, ...(!!buildDefinition ? buildDefinition(definition) : {}) };
 };
 
 export const getFieldTypeMenuItems = () => {

@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Button } from '@blueprintjs/core';
 import { Fields } from '../../../../../fields';
 import { setFields, selectItem } from '../../../../../state/configurator';
+import { getPropertyFields } from '../../../../../models/definitions/text';
 
 class FieldProperties extends React.Component {
     onSubmit = values => {
@@ -15,7 +16,7 @@ class FieldProperties extends React.Component {
 
     onRemove = async () => {
         const { selectItem, setFields, page, group, fields, field } = this.props;
-        await selectItem(page, group);
+        await selectItem();
         setFields(page, group, [...fields.filter(f => f.id !== field.id)]);
     };
 
@@ -37,13 +38,6 @@ class FieldProperties extends React.Component {
                             }}
                         >
                             <Fields.Input
-                                name={'id'}
-                                label={'Property'}
-                                info={'(form unique)'}
-                                placeholder={'Property'}
-                                className="fg-field width-100"
-                            />
-                            <Fields.Input
                                 name={'title'}
                                 label={'Title'}
                                 placeholder={'Title'}
@@ -55,6 +49,9 @@ class FieldProperties extends React.Component {
                                 placeholder={'Description'}
                                 className="fg-field width-100"
                             />
+
+                            {getPropertyFields()}
+
                             <Fields.Slider
                                 label={'Width'}
                                 info={'(desktop)'}
@@ -80,6 +77,13 @@ class FieldProperties extends React.Component {
                                     stepSize: 5,
                                     labelStepSize: 25
                                 }}
+                                className="fg-field width-100"
+                            />
+                            <Fields.Input
+                                name={'property'}
+                                label={'Property'}
+                                info={'(fields unique)'}
+                                placeholder={'Property'}
                                 className="fg-field width-100"
                             />
 

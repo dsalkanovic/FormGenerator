@@ -4,6 +4,7 @@ import { FieldTypes } from './definitions/fieldTypes';
 
 export class Page {
     id;
+    property;
     title;
     type;
     header;
@@ -15,6 +16,7 @@ export class Page {
     constructor(page = {}) {
         const {
             id = uuid(8),
+            property,
             title = 'New Page',
             description = '',
             header = {},
@@ -25,6 +27,7 @@ export class Page {
         } = page;
 
         this.id = id;
+        this.property = property || `page_${id}`;
         this.title = title;
         this.type = FieldTypes.Page;
         this.description = description;

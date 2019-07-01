@@ -23,7 +23,7 @@ class TagField extends React.Component {
 
     clearButton = field => {
         const { disabled } = this.props;
-        if (field.value.length === 0) return null;
+        if (!field.value || field.value.length === 0) return null;
 
         return <Button disabled={disabled} icon={'cross'} minimal={true} onClick={() => this.onChange([], field)} />;
     };
