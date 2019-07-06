@@ -24,7 +24,7 @@ class DateRangeField extends React.Component {
     };
 
     momentFormatter = () => {
-        const { format = 'M/D/YYYY' } = this.props;
+        const { format = 'MM/DD/YYYY' } = this.props;
         return {
             formatDate: (date, locale) =>
                 moment(date)

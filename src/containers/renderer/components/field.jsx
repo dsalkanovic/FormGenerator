@@ -19,7 +19,7 @@ class FieldRenderer extends React.Component {
     };
 
     getField = () => {
-        const { field: { id, title, description, type } = {}, definition: { isMulti } = {} } = this.props;
+        const { field: { id, title, description, type } = {}, definition = {} } = this.props;
 
         const fieldProps = {
             id,
@@ -33,7 +33,7 @@ class FieldRenderer extends React.Component {
 
         switch (type) {
             case FieldTypes.Text:
-                return !!isMulti ? <Fields.Tag {...fieldProps} /> : <Fields.Input {...fieldProps} />;
+                return !!definition.isMulti ? <Fields.Tag {...fieldProps} /> : <Fields.Input {...fieldProps} />;
 
             case FieldTypes.Number:
                 return <Fields.Number {...fieldProps} />;
@@ -42,7 +42,9 @@ class FieldRenderer extends React.Component {
                 return <Fields.Checkbox {...fieldProps} label={description} info={''} placeholder={title} />;
 
             case FieldTypes.Date:
-                return <Fields.Date {...fieldProps} />;
+                return (
+                    <Fields.Date {...fieldProps} format={definition.format} min={definition.min} max={definition.max} />
+                );
 
             case FieldTypes.Select:
                 return <Fields.Select {...fieldProps} options={[]} />;

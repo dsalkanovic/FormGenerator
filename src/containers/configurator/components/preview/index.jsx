@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Card } from '@blueprintjs/core';
 import SimpleBar from 'simplebar-react';
 import FromRenderer from '../../../renderer';
+import { hash } from 'immutable';
 
 class Preview extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class Preview extends React.Component {
                     </Card>
                     <SimpleBar style={{ height: `${height - 121}px` }}>
                         <div className="pd-20">
-                            <FromRenderer pages={pages} activePageOverride={index} />
+                            <FromRenderer key={hash(pages)} pages={pages} activePageOverride={index} />
                         </div>
                     </SimpleBar>
                 </Card>

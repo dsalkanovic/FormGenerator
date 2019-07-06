@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { Button } from '@blueprintjs/core';
 import { Fields } from '../../../../../fields';
 import { setFields, selectItem } from '../../../../../state/configurator';
-import { getPropertyFields } from '../../../../../models/definitions/text';
+import { getFieldProperties } from '../../../../../models/definitions/fieldTypes';
 
 class FieldProperties extends React.Component {
     onSubmit = values => {
@@ -21,15 +21,16 @@ class FieldProperties extends React.Component {
     };
 
     render() {
-        const { field } = this.props;
+        const { page, group, field } = this.props;
 
         return (
             <Formik
+                key={field.id}
                 enableReinitialize={true}
                 initialValues={{ ...field }}
                 validationSchema={Yup.object().shape({})}
                 onSubmit={this.onSubmit}
-                render={({ handleChange, submitForm }) => {
+                render={({ handleChange, submitForm, values }) => {
                     return (
                         <Form
                             onChange={async e => {
@@ -50,7 +51,7 @@ class FieldProperties extends React.Component {
                                 className="fg-field width-100"
                             />
 
-                            {getPropertyFields()}
+                            {getFieldProperties(field)}
 
                             <Fields.Slider
                                 label={'Width'}
@@ -82,7 +83,7 @@ class FieldProperties extends React.Component {
                             <Fields.Input
                                 name={'property'}
                                 label={'Property'}
-                                info={'(fields unique)'}
+                                info={`(${page.property}.${group.property}.${values.property})`}
                                 placeholder={'Property'}
                                 className="fg-field width-100"
                             />

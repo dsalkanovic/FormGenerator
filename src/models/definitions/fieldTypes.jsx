@@ -1,5 +1,7 @@
 import { Map } from 'immutable';
 import { TextFieldDefinition } from './text';
+import { DateFieldDefinition } from './date';
+import { BooleanFieldDefinition } from './boolean';
 
 export const FieldTypeDefinitions = {
     Page: { name: 'FT_PAGE', label: 'Page', icon: 'applications', rank: 1000 },
@@ -28,14 +30,14 @@ export const FieldTypeDefinitions = {
     Boolean: {
         name: 'FT_BOOLEAN',
         label: 'Checkbox',
-        buildDefinition: d => new TextFieldDefinition(d),
+        buildDefinition: d => new BooleanFieldDefinition(d),
         icon: 'form',
         rank: 100
     },
     Date: {
         name: 'FT_DATE',
         label: 'Date',
-        buildDefinition: d => new TextFieldDefinition(d),
+        buildDefinition: d => new DateFieldDefinition(d),
         icon: 'calendar',
         rank: 100
     },
@@ -70,4 +72,21 @@ export const getFieldTypeMenuItems = () => {
         .toArray()
         .map(([_, { name, label, icon }]) => ({ name, label, icon }))
         .filter(f => ![FieldTypes.Page, FieldTypes.Group].includes(f.name));
+};
+
+export const getFieldProperties = field => {
+    switch (field.type) {
+        case FieldTypes.Text:
+            return TextFieldDefinition.getProperties(field);
+        case FieldTypes.Date:
+            return DateFieldDefinition.getProperties(field);
+        case FieldTypes.Boolean:
+            return BooleanFieldDefinition.getProperties(field);
+
+        case FieldTypes.Number:
+        case FieldTypes.Select:
+        case FieldTypes.File:
+        default:
+            return null;
+    }
 };

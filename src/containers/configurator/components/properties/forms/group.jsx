@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Button } from '@blueprintjs/core';
 import { Fields } from '../../../../../fields';
 import { setGroups, selectItem } from '../../../../../state/configurator';
+import { safeVariablePattern } from '../../../../../utilities/constants';
 
 class GroupProperties extends React.Component {
     onSubmit = values => {
@@ -20,15 +21,19 @@ class GroupProperties extends React.Component {
     };
 
     render() {
-        const { group } = this.props;
+        const { page, group } = this.props;
 
         return (
             <Formik
                 enableReinitialize={true}
                 initialValues={{ ...group }}
-                validationSchema={Yup.object().shape({})}
+                validationSchema={Yup.object().shape({
+                    property: Yup.string()
+                        .matches(safeVariablePattern, { message: 'Invalid property name.' })
+                        .required()
+                })}
                 onSubmit={this.onSubmit}
-                render={({ handleChange, submitForm }) => {
+                render={({ handleChange, submitForm, values }) => {
                     return (
                         <Form
                             onChange={async e => {
@@ -83,7 +88,7 @@ class GroupProperties extends React.Component {
                             <Fields.Input
                                 name={'property'}
                                 label={'Property'}
-                                info={'(groups unique)'}
+                                info={`(${page.property}.${values.property})`}
                                 placeholder={'Property'}
                                 className="fg-field width-100"
                             />

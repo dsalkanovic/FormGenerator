@@ -7,6 +7,7 @@ import { Button } from '@blueprintjs/core';
 import { Fields } from '../../../../../fields';
 import { setPages, selectItem } from '../../../../../state/configurator';
 import PropertiesGroup from '../components/propertiesGroup';
+import { safeVariablePattern } from '../../../../../utilities/constants';
 
 class PageProperties extends React.Component {
     onSubmit = values => {
@@ -27,7 +28,11 @@ class PageProperties extends React.Component {
             <Formik
                 enableReinitialize={true}
                 initialValues={{ ...page }}
-                validationSchema={Yup.object().shape({})}
+                validationSchema={Yup.object().shape({
+                    property: Yup.string()
+                        .matches(safeVariablePattern, { message: 'Invalid property name.' })
+                        .required()
+                })}
                 onSubmit={this.onSubmit}
                 render={({ handleChange, submitForm }) => {
                     return (
@@ -114,7 +119,6 @@ class PageProperties extends React.Component {
                             <Fields.Input
                                 name={'property'}
                                 label={'Property'}
-                                info={'(pages unique)'}
                                 placeholder={'Property'}
                                 className="fg-field width-100"
                             />

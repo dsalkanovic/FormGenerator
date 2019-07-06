@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DraggableList from 'react-draggable-list';
 import SimpleBar from 'simplebar-react';
-import { Button, Card, Menu, Classes } from '@blueprintjs/core';
+import { Button, Card, Menu, Classes, Tooltip } from '@blueprintjs/core';
 import FieldsPanel from './fields';
 import ListItem from './item';
 import { setGroups, selectItem } from '../../../../../state/configurator';
@@ -50,7 +50,9 @@ class GroupsPanel extends React.Component {
                             />
                             <div className="fg-panel-title">{page.title}</div>
                         </div>
-                        <Button icon="plus" minimal={true} onClick={this.addGroup} />
+                        <Tooltip content="Add new group" hoverOpenDelay={1000}>
+                            <Button icon="plus" minimal={true} onClick={this.addGroup} />
+                        </Tooltip>
                     </Card>
                     <SimpleBar style={{ height: `${height - 121}px` }}>
                         <div className="draggable-area" ref={el => (this.draggable = el)}>

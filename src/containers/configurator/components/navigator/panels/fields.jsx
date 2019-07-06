@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DraggableList from 'react-draggable-list';
 import SimpleBar from 'simplebar-react';
-import { Button, Card, Menu, MenuItem, Popover, Classes } from '@blueprintjs/core';
+import { Button, Card, Menu, MenuItem, Popover, Classes, Tooltip } from '@blueprintjs/core';
 import ListItem from './item';
 import { selectItem, setFields } from '../../../../../state/configurator';
 import { Field } from '../../../../../models/field';
@@ -14,6 +14,13 @@ class FieldsPanel extends React.Component {
         const { page, group, fields = [], selected: { field } = {}, selectItem } = this.props;
         if (!field && fields.length > 0) selectItem(page, group, fields[0]);
     }
+
+    addField = async type => {
+        const { page, group, fields = [], setFields, selectItem } = this.props;
+        const newField = new Field({ title: 'New Field', type, order: fields.length });
+        await setFields(page, group, [...fields, newField]);
+        selectItem(page, group, newField);
+    };
 
     renderBreadcrumb = ({ text, onClick }) => (
         <div className={`ellipsis ${Classes.BREADCRUMB} ${Classes.BREADCRUMB_CURRENT}`} onClick={onClick}>
@@ -47,18 +54,15 @@ class FieldsPanel extends React.Component {
                                             key={i}
                                             icon={icon}
                                             text={label}
-                                            onClick={() =>
-                                                setFields(page, group, [
-                                                    ...fields,
-                                                    new Field({ title: 'New Field', type: name })
-                                                ])
-                                            }
+                                            onClick={() => this.addField(name)}
                                         />
                                     ))}
                                 </Menu>
                             }
                         >
-                            <Button minimal={true} icon="plus" />
+                            <Tooltip content="Add new field" hoverOpenDelay={1000}>
+                                <Button minimal={true} icon="plus" />
+                            </Tooltip>
                         </Popover>
                     </Card>
                     <SimpleBar style={{ height: `${height - 121}px` }}>

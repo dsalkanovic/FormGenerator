@@ -19,12 +19,13 @@ export class Field {
         definition = {},
         width = { mobile: 100, desktop: 100 },
         title = 'New Field',
-        description,
+        description = '',
         order = 0,
         visibleIf = true
     }) {
         this.id = id;
         this.property = property || `field_${id}`;
+
         this.title = title;
         this.description = description;
 

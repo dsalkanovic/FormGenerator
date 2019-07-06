@@ -10,42 +10,53 @@ import './fields.scss';
 class DateField extends React.Component {
     defaultValue = '';
 
-    onChange = (value, { onChange }) => {
-        const { id, name } = this.props;
-        onChange({
+    onChange = async (value, { onChange }, { submitForm }) => {
+        const { id = uuid(), name, submitOnChange } = this.props;
+        await onChange({
             persist: () => {},
             target: {
                 type: 'change',
                 id,
                 name,
-                value
+                value: this.momentFormatter().formatDate(value)
             }
         });
+
+        if (!!submitOnChange) {
+            submitForm();
+        }
     };
 
     momentFormatter = () => {
-        const { format = 'M/D/YYYY' } = this.props;
+        const { format = 'MM/DD/YYY' } = this.props;
         return {
-            formatDate: (date, locale) =>
-                moment(date)
-                    .locale(locale)
-                    .format(format),
-            parseDate: (str, locale) =>
-                moment(str, format)
-                    .locale(locale)
-                    .toDate(),
+            formatDate: date => moment(date).format(format),
+            parseDate: str => moment(str, format).toDate(),
             placeholder: format
         };
     };
 
     render() {
-        const { id = uuid(), name, validate, label, info, className, extra, locale } = this.props;
+        const {
+            id = uuid(),
+            name,
+            validate,
+            label,
+            info,
+            className,
+            min = moment()
+                .add(-1000, 'years')
+                .toDate(),
+            max = moment()
+                .add(1000, 'years')
+                .toDate()
+        } = this.props;
 
         return (
             <Field
                 name={name}
                 validate={validate}
-                render={({ field }) => {
+                render={({ field, form }) => {
                     return (
                         <FormGroup
                             helperText={
@@ -59,14 +70,19 @@ class DateField extends React.Component {
                             className={`${className} fg-date-field`}
                         >
                             <DateInput
-                                {...field}
-                                {...extra}
-                                id={id}
-                                name={name}
-                                locale={locale || moment.locale()}
-                                onChange={v => this.onChange(v, field)}
+                                minDate={this.momentFormatter().parseDate(min)}
+                                maxDate={this.momentFormatter().parseDate(max)}
+                                defaultValue={this.momentFormatter().parseDate(field.value)}
+                                onChange={v => this.onChange(v, field, form)}
                                 {...this.momentFormatter()}
+                                timePrecision={undefined}
                                 fill={true}
+                                inputProps={{
+                                    onKeyDown: e => {
+                                        e.preventDefault();
+                                        return false;
+                                    }
+                                }}
                             />
                         </FormGroup>
                     );

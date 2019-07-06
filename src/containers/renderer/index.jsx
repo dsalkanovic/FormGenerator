@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Card, Button, ProgressBar, Popover, Menu, MenuItem } from '@blueprintjs/core';
@@ -18,26 +19,53 @@ class FromRenderer extends React.Component {
         console.log(values);
     };
 
-    getValidationSchema = page => {
-        const shape = {};
-        if (!page) return Yup.object().shape(shape);
+    getInitialValues = page => {
+        const initialValues = {};
+        if (!page) return initialValues;
 
         const { groups = [] } = page;
-        if (!groups || groups.length === 0) return Yup.object().shape(shape);
-        const rrr = groups
-            .map(g => g.fields)
-            .flat()
-            .filter(f => !!f.definition && !!f.definition.validation);
+        if (!groups || groups.length === 0) return initialValues;
 
-        rrr.forEach(field => {
-            const { property, definition } = field;
-            const { validation } = definition;
-            shape[`${page.property}.${'group.property'}.${property}`] = validationFunc(validation);
+        groups
+            .map(g => g.fields.map(f => ({ ...f, groupProperty: g.property })))
+            .flat()
+            .forEach(field => {
+                const { property, groupProperty, definition } = field;
+                initialValues[page.property] = !!initialValues[page.property] ? initialValues[page.property] : {};
+                initialValues[page.property][groupProperty] = !!initialValues[page.property][groupProperty]
+                    ? initialValues[page.property][groupProperty]
+                    : {};
+                initialValues[page.property][groupProperty][property] = definition.defaultValue;
+            });
+
+        return initialValues;
+    };
+
+    getValidationSchema = page => {
+        if (!page) return Yup.object().shape({});
+        if (!page.groups || page.groups.length === 0) return Yup.object().shape({});
+
+        const groups = page.groups
+            .map(g => ({
+                property: g.property,
+                fields: g.fields.filter(f => !!f.definition && (!!f.definition.isRequired || !!f.definition.validation))
+            }))
+            .filter(g => g.fields && g.fields.length > 0);
+
+        const pageShape = {};
+        groups.forEach(({ property, fields }) => {
+            const group = {};
+            fields.forEach(field => (group[field.property] = validationFunc(field.definition)));
+            pageShape[property] = Yup.object().shape(group);
         });
 
-        debugger;
+        if (_.isEmpty(pageShape)) {
+            return undefined;
+        }
 
-        return Yup.object().shape(shape);
+        const formShape = {};
+        formShape[page.property] = Yup.object().shape(pageShape);
+        return Yup.object().shape(formShape);
     };
 
     render() {
@@ -46,19 +74,22 @@ class FromRenderer extends React.Component {
         if (pages.length === 0) return null;
 
         const index = Number.isNaN(Number.parseInt(activePageOverride)) ? pageIndex : activePageOverride;
-        const validationSchema = this.getValidationSchema(pages[index]);
+        const page = pages[index];
+        const initialValues = this.getInitialValues(page);
+        const validationSchema = this.getValidationSchema(page);
 
         return (
             <Formik
+                key={page.id}
                 enableReinitialize={true}
-                initialValues={{}}
+                initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={this.onSubmit}
-                render={() => {
+                render={({ isValid }) => {
                     return (
                         <Form>
                             <PageRenderer
-                                page={pages[index]}
+                                page={page}
                                 progress={({ style, showProgress }) =>
                                     !!showProgress && (
                                         <Card elevation={0} className="fg-renderer-navigation" style={style}>
@@ -88,7 +119,7 @@ class FromRenderer extends React.Component {
                                     )
                                 }
                             />
-                            <FormButtons buttons={pages[index].buttons} />
+                            <FormButtons buttons={page.buttons} isValid={!!validationSchema ? isValid : true} />
                         </Form>
                     );
                 }}
