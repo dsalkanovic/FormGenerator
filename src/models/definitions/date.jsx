@@ -29,12 +29,13 @@ export class DateFieldDefinition {
                       .format(format);
     }
 
-    static getProperties = f => getPropertyFields(f);
+    static getValidationFunction = field => validationFunc(field.definition);
+    static getProperties = field => getPropertyFields(field);
 }
 
-export const validationFunc = ({ isRequired = false }) => (!!isRequired ? Yup.string().required() : undefined);
+const validationFunc = ({ isRequired = false }) => (!!isRequired ? Yup.string().required() : undefined);
 
-export const getPropertyFields = field => {
+const getPropertyFields = field => {
     const {
         definition: { format }
     } = field;

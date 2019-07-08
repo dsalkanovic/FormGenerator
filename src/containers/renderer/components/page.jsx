@@ -4,7 +4,7 @@ import GroupRenderer from './group';
 
 class PageRenderer extends React.Component {
     render() {
-        const { progress, page } = this.props;
+        const { progress, page, screen } = this.props;
         const {
             title,
             header: { description, image, show, showProgress },
@@ -38,7 +38,7 @@ class PageRenderer extends React.Component {
                 )}
                 <div className="fg-groups-wrapper">
                     {groups.map((group, i) => (
-                        <GroupRenderer key={i} page={page} group={group} />
+                        <GroupRenderer key={i} screen={screen} page={page} group={group} />
                     ))}
                 </div>
             </React.Fragment>

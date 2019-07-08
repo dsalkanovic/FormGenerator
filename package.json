@@ -14,6 +14,7 @@
         "@blueprintjs/icons": "^3.9.0",
         "@blueprintjs/select": "^3.8.1",
         "@blueprintjs/timezone": "^3.4.0",
+        "file-saver": "^2.0.2",
         "formik": "^1.5.7",
         "gh-pages": "^2.0.1",
         "hash-sum": "^2.0.0",

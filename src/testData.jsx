@@ -14,45 +14,97 @@ export const TEST_PAGES = [
             show: true,
             showProgress: true
         },
-        buttons: { next: { show: true, text: 'Move forward' } },
+        buttons: { next: { text: 'Lets Rock!' } },
         groups: [
             new Group({
                 title: 'Personal Info',
                 property: 'personal',
-
                 description:
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a rutrum tellus. Fusce ut mauris id nunc bibendum fringilla.',
                 width: { desktop: 100, mobile: 100 },
                 fields: [
-                    new Field({ title: 'Name', property: 'name', width: { desktop: 50, mobile: 100 } }),
-                    new Field({ title: 'Email', property: 'email', width: { desktop: 50, mobile: 100 } }),
+                    new Field({
+                        title: 'Name',
+                        property: 'name',
+                        width: { desktop: 50, mobile: 100 },
+                        definition: { isRequired: true }
+                    }),
+                    new Field({
+                        title: 'Email',
+                        property: 'email',
+                        width: { desktop: 50, mobile: 100 },
+                        definition: { validation: 'email' }
+                    }),
                     new Field({
                         title: 'Date of birth',
                         property: 'dateOfBirth',
                         width: { desktop: 50, mobile: 100 },
                         type: FieldTypes.Date,
                         definition: { format: 'MM/DD/YYYY' }
+                    }),
+                    new Field({
+                        title: 'Sex',
+                        property: 'sex',
+                        width: { desktop: 50, mobile: 100 },
+                        type: FieldTypes.Select,
+                        definition: { options: ['Male', 'Female', 'Other'] }
+                    }),
+                    new Field({
+                        title: 'Age',
+                        property: 'age',
+                        width: { desktop: 50, mobile: 100 },
+                        type: FieldTypes.Number
+                    }),
+                    new Field({
+                        title: 'Eligible',
+                        property: 'eligible',
+                        description: 'Is Eligible ?',
+                        width: { desktop: 50, mobile: 100 },
+                        type: FieldTypes.Boolean
                     })
-                    // new Field({ title: 'Age', width: { desktop: 50, mobile: 100 }, type: FieldTypes.Number }),
-                    // new Field({ title: 'Sex', width: { desktop: 50, mobile: 100 }, type: FieldTypes.Select }),
-                    // new Field({
-                    //     title: 'Eligible',
-                    //     description: 'Is Eligible ?',
-                    //     width: { desktop: 50, mobile: 100 },
-                    //     type: FieldTypes.Boolean
-                    // })
+                ]
+            }),
+            new Group({
+                title: 'Pictures',
+                property: 'images',
+                width: { desktop: 100, mobile: 100 },
+                fields: [
+                    new Field({
+                        title: 'Work',
+                        description: '(upload some work pictures)',
+                        property: 'work',
+                        type: FieldTypes.File,
+                        width: { desktop: 50, mobile: 100 },
+                        definition: { isMulti: true }
+                    }),
+                    new Field({
+                        title: 'Vacation',
+                        description: '(upload some vacation pictures)',
+                        property: 'vacation',
+                        type: FieldTypes.File,
+                        width: { desktop: 50, mobile: 100 },
+                        definition: { isMulti: true }
+                    })
+                ]
+            }),
+            new Group({
+                title: 'Location',
+                property: 'location',
+                width: { desktop: 50, mobile: 100 },
+                fields: [
+                    new Field({ title: 'Country', property: 'country' }),
+                    new Field({ title: 'City', property: 'city' })
+                ]
+            }),
+            new Group({
+                title: 'Some other group',
+                property: 'some',
+                width: { desktop: 50, mobile: 100 },
+                fields: [
+                    new Field({ title: 'Address', property: 'address' }),
+                    new Field({ title: 'Post Code', property: 'zip' })
                 ]
             })
-            // new Group({
-            //     title: 'Location',
-            //     width: { desktop: 50, mobile: 100 },
-            //     fields: [new Field({ title: 'Country' }), new Field({ title: 'City' })]
-            // }),
-            // new Group({
-            //     title: 'Some other group',
-            //     width: { desktop: 50, mobile: 100 },
-            //     fields: [new Field({ title: 'Address' }), new Field({ title: 'Post Code' })]
-            // })
         ]
     })
     // new Page({

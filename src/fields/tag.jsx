@@ -1,24 +1,30 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import { FormGroup, Button, TagInput } from '@blueprintjs/core';
-import { uuid } from '../utilities/common';
+import { uuid, distinct } from '../utilities/common';
 
 import './fields.scss';
 
 class TagField extends React.Component {
     defaultValue = [];
 
-    onChange = (value, { onChange }) => {
-        const { id, name } = this.props;
-        onChange({
+    onChange = async (value, { onChange }, { submitForm }) => {
+        const { id, name, submitOnChange, distinct: onlyUnique = false } = this.props;
+        const values = !!onlyUnique ? value.filter(distinct) : value;
+
+        await onChange({
             persist: () => {},
             target: {
                 type: 'change',
                 id,
                 name,
-                value: value || []
+                value: values || []
             }
         });
+
+        if (!!submitOnChange) {
+            submitForm();
+        }
     };
 
     clearButton = field => {
@@ -35,7 +41,7 @@ class TagField extends React.Component {
             <Field
                 name={name}
                 validate={validate}
-                render={({ field }) => {
+                render={({ field, form }) => {
                     return (
                         <FormGroup
                             helperText={
@@ -49,7 +55,6 @@ class TagField extends React.Component {
                             className={className}
                         >
                             <TagInput
-                                {...field}
                                 {...extra}
                                 id={id}
                                 name={name}
@@ -59,8 +64,9 @@ class TagField extends React.Component {
                                 addOnBlur={true}
                                 tagProps={{ minimal: true }}
                                 rightElement={this.clearButton(field)}
-                                onChange={v => this.onChange(v, field)}
+                                onChange={v => this.onChange(v, field, form)}
                                 values={field.value || []}
+                                inputProps={{ name: `${name}Raw` }}
                             />
                         </FormGroup>
                     );

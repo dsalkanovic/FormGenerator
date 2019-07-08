@@ -8,8 +8,7 @@ class FormButtons extends React.Component {
     }
     render() {
         const {
-            buttons: { cancel, back, save, next },
-            isValid
+            buttons: { cancel, back, save, next }
         } = this.props;
 
         return (
@@ -28,12 +27,12 @@ class FormButtons extends React.Component {
                 </div>
                 <div className="fg-right-buttons">
                     {!!save.show && (
-                        <Button type="button" minimal={true} disabled={!isValid}>
+                        <Button type="button" minimal={true}>
                             {save.text}
                         </Button>
                     )}
 
-                    <Button type="submit" intent={Intent.SUCCESS} disabled={!isValid}>
+                    <Button type="submit" intent={Intent.SUCCESS}>
                         {next.text}
                     </Button>
                 </div>

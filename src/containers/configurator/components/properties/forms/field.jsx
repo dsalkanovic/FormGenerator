@@ -24,84 +24,85 @@ class FieldProperties extends React.Component {
         const { page, group, field } = this.props;
 
         return (
-            <Formik
-                key={field.id}
-                enableReinitialize={true}
-                initialValues={{ ...field }}
-                validationSchema={Yup.object().shape({})}
-                onSubmit={this.onSubmit}
-                render={({ handleChange, submitForm, values }) => {
-                    return (
-                        <Form
-                            onChange={async e => {
-                                await handleChange(e);
-                                submitForm();
-                            }}
-                        >
-                            <Fields.Input
-                                name={'title'}
-                                label={'Title'}
-                                placeholder={'Title'}
-                                className="fg-field width-100"
-                            />
-                            <Fields.Input
-                                name={'description'}
-                                label={'Description'}
-                                placeholder={'Description'}
-                                className="fg-field width-100"
-                            />
-
-                            {getFieldProperties(field)}
-
-                            <Fields.Slider
-                                label={'Width'}
-                                info={'(desktop)'}
-                                name={'width.desktop'}
-                                submitOnChange={true}
-                                extra={{
-                                    min: 25,
-                                    max: 100,
-                                    stepSize: 5,
-                                    labelStepSize: 25
+            <React.Fragment>
+                <Formik
+                    key={field.id}
+                    enableReinitialize={true}
+                    initialValues={{ ...field }}
+                    validationSchema={Yup.object().shape({})}
+                    onSubmit={this.onSubmit}
+                    render={({ handleChange, submitForm, values }) => {
+                        return (
+                            <Form
+                                onChange={async e => {
+                                    await handleChange(e);
+                                    submitForm();
                                 }}
-                                className="fg-field width-100 mg-b-0"
-                            />
-                            <Fields.Slider
-                                disabled={true}
-                                label={'Width'}
-                                info={'(mobile)'}
-                                name={'width.mobile'}
-                                submitOnChange={true}
-                                extra={{
-                                    min: 25,
-                                    max: 100,
-                                    stepSize: 5,
-                                    labelStepSize: 25
-                                }}
-                                className="fg-field width-100"
-                            />
-                            <Fields.Input
-                                name={'property'}
-                                label={'Property'}
-                                info={`(${page.property}.${group.property}.${values.property})`}
-                                placeholder={'Property'}
-                                className="fg-field width-100"
-                            />
-
-                            <div className="pd-15">
-                                <Button
-                                    type="button"
-                                    intent="danger"
-                                    icon="trash"
-                                    text="Remove"
-                                    fill={true}
-                                    onClick={this.onRemove}
+                            >
+                                <Fields.Input
+                                    name={'title'}
+                                    label={'Title'}
+                                    placeholder={'Title'}
+                                    className="fg-field width-100"
                                 />
-                            </div>
-                        </Form>
-                    );
-                }}
-            />
+                                <Fields.Input
+                                    name={'description'}
+                                    label={'Description'}
+                                    placeholder={'Description'}
+                                    className="fg-field width-100"
+                                />
+
+                                {getFieldProperties(field)}
+
+                                <Fields.Slider
+                                    label={'Width'}
+                                    info={'(desktop)'}
+                                    name={'width.desktop'}
+                                    submitOnChange={true}
+                                    extra={{
+                                        min: 25,
+                                        max: 100,
+                                        stepSize: 5,
+                                        labelStepSize: 25
+                                    }}
+                                    className="fg-field width-100 mg-b-0"
+                                />
+                                <Fields.Slider
+                                    label={'Width'}
+                                    info={'(mobile)'}
+                                    name={'width.mobile'}
+                                    submitOnChange={true}
+                                    extra={{
+                                        min: 25,
+                                        max: 100,
+                                        stepSize: 5,
+                                        labelStepSize: 25
+                                    }}
+                                    className="fg-field width-100"
+                                />
+                                <Fields.Input
+                                    name={'property'}
+                                    label={'Property'}
+                                    info={`(${page.property}.${group.property}.${values.property})`}
+                                    placeholder={'Property'}
+                                    className="fg-field width-100"
+                                />
+
+                                <div className="pd-15">
+                                    <Button
+                                        type="button"
+                                        intent="danger"
+                                        icon="trash"
+                                        text="Remove"
+                                        fill={true}
+                                        onClick={this.onRemove}
+                                    />
+                                </div>
+                            </Form>
+                        );
+                    }}
+                />
+            </React.Fragment>
         );
     }
 }

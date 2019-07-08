@@ -72,7 +72,6 @@ class GroupProperties extends React.Component {
                                 className="fg-field width-100 mg-b-0"
                             />
                             <Fields.Slider
-                                disabled={true}
                                 label={'Width'}
                                 info={'(mobile)'}
                                 name={'width.mobile'}

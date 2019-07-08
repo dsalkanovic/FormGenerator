@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import FileSaver from 'file-saver';
 import { store } from '../state';
 import FormConfigurator from './configurator';
 import {
@@ -14,12 +15,18 @@ import {
     Button,
     MenuDivider
 } from '@blueprintjs/core';
+import { uuid } from '../utilities/common';
 
 class FormGenerator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
+
+    saveFile = ({ form, pages }) => {
+        var blob = new Blob([JSON.stringify({ form, pages })], { type: 'text/plain;charset=utf-8' });
+        FileSaver.saveAs(blob, `form-${uuid(8)}.json`);
+    };
 
     render() {
         FocusStyleManager.onlyShowFocusOnTabs();
@@ -43,12 +50,16 @@ class FormGenerator extends React.Component {
                                                 })
                                             }
                                         />
-                                        <MenuItem icon="floppy-disk" text="Save" />
+                                        <MenuItem icon="floppy-disk" text="Save" disabled={true} />
                                         <MenuDivider />
-                                        <MenuItem icon="new-object" text="New" />
+                                        <MenuItem icon="new-object" text="New" disabled={true} />
                                         <MenuDivider />
-                                        <MenuItem icon="export" text="Export" />
-                                        <MenuItem icon="import" text="Import" />
+                                        <MenuItem
+                                            icon="export"
+                                            text="Export"
+                                            onClick={() => this.saveFile(store.getState().configurator)}
+                                        />
+                                        <MenuItem icon="import" text="Import" disabled={true} />
                                     </Menu>
                                 }
                             >

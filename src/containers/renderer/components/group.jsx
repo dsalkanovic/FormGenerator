@@ -19,13 +19,19 @@ class GroupRenderer extends React.Component {
     };
 
     render() {
-        const { page, group = {} } = this.props;
-        const { title, description, block, width: { desktop } = { desktop: 100, mobile: 100 }, fields = [] } = group;
+        const { page, group = {}, screen } = this.props;
+        const {
+            title,
+            description,
+            block,
+            width: { desktop, mobile } = { desktop: 100, mobile: 100 },
+            fields = []
+        } = group;
 
         if (!block) return this.renderFields();
 
         return (
-            <div className="fg-group-renderer" style={{ width: `${desktop}%` }}>
+            <div className="fg-group-renderer" style={{ width: `${screen.width > 500 ? desktop : mobile}%` }}>
                 <Card elevation={0} className="">
                     <div className="fg-group-header mg-b-20">
                         <h3 className="mg-0">{title}</h3>
@@ -35,6 +41,7 @@ class GroupRenderer extends React.Component {
                         {fields.map((field, i) => (
                             <FieldRenderer
                                 key={i}
+                                screen={screen}
                                 page={page}
                                 group={group}
                                 field={field}

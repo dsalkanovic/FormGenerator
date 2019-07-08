@@ -7,3 +7,7 @@ export const uuid = (n = 36) => {
 export const isEmpty = string => {
     return string === undefined || string === null || string === '';
 };
+
+export const distinct = (value, index, self) => {
+    return self.indexOf(value) === index;
+};

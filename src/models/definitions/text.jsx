@@ -6,21 +6,20 @@ export class TextFieldDefinition {
     defaultValue;
     validation;
     isRequired;
-    isMulti;
     mask;
 
-    constructor({ defaultValue = '', validation = '', isRequired = false, isMulti = false, mask = '' }) {
+    constructor({ defaultValue = '', validation = undefined, isRequired = false, mask = '' }) {
         this.defaultValue = defaultValue;
         this.validation = validation;
         this.isRequired = isRequired;
-        this.isMulti = isMulti;
         this.mask = mask;
     }
 
-    static getProperties = f => getPropertyFields(f);
+    static getValidationFunction = field => validationFunc(field.definition);
+    static getProperties = field => getPropertyFields(field);
 }
 
-export const validationFunc = ({ validation = undefined, isRequired = false }) => {
+const validationFunc = ({ validation = undefined, isRequired = false }) => {
     if (!validation && !isRequired) return undefined;
     if (!validation && !!isRequired) return Yup.string().required();
 
@@ -41,7 +40,7 @@ const validationOptions = () => {
     return [{ value: 'email', label: 'Email' }, { value: 'zip', label: 'ZIP' }, { value: 'ssn', label: 'SSN' }];
 };
 
-export const getPropertyFields = field => {
+const getPropertyFields = field => {
     return (
         <React.Fragment>
             <Fields.Input
@@ -49,11 +48,6 @@ export const getPropertyFields = field => {
                 label={'Default value'}
                 placeholder={'Default value'}
                 className="fg-field width-100"
-            />
-            <Fields.Checkbox
-                name={'definition.isMulti'}
-                placeholder={'Is Multi-text ?'}
-                className="fg-field width-100 mg-b-0"
             />
             <Fields.Checkbox
                 name={'definition.isRequired'}

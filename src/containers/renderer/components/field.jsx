@@ -33,10 +33,19 @@ class FieldRenderer extends React.Component {
 
         switch (type) {
             case FieldTypes.Text:
-                return !!definition.isMulti ? <Fields.Tag {...fieldProps} /> : <Fields.Input {...fieldProps} />;
+                return <Fields.Input {...fieldProps} />;
 
             case FieldTypes.Number:
                 return <Fields.Number {...fieldProps} />;
+
+            case FieldTypes.File:
+                return (
+                    <Fields.File
+                        {...fieldProps}
+                        placeholder={definition.buttonLabel || title}
+                        multi={definition.isMulti}
+                    />
+                );
 
             case FieldTypes.Boolean:
                 return <Fields.Checkbox {...fieldProps} label={description} info={''} placeholder={title} />;
@@ -47,7 +56,12 @@ class FieldRenderer extends React.Component {
                 );
 
             case FieldTypes.Select:
-                return <Fields.Select {...fieldProps} options={[]} />;
+                return (
+                    <Fields.Select
+                        {...fieldProps}
+                        options={(definition.options || []).map(o => ({ value: o, label: o }))}
+                    />
+                );
 
             default:
                 return (
@@ -59,9 +73,10 @@ class FieldRenderer extends React.Component {
     };
 
     render() {
-        const { field: { width: { desktop } } = { width: { desktop: 100 } } } = this.props;
+        const { screen, field: { width: { desktop, mobile } } = { width: { desktop: 100, mobile: 100 } } } = this.props;
+
         return (
-            <div className="fg-field-renderer" style={{ width: `${desktop}%` }}>
+            <div className="fg-field-renderer" style={{ width: `${screen.width > 500 ? desktop : mobile}%` }}>
                 {this.getField()}
             </div>
         );
